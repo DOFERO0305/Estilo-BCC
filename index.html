@@ -68,14 +68,13 @@
         .breaking-text { animation: scrollLeft 30s linear infinite; display: inline-block; padding-left: 100%; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Pesquisa */
+        /* Pesquisa & Slider */
         .search-container { max-width: 1200px; margin: 15px auto; padding: 0 15px; }
         .search-box { position: relative; }
         .search-box input { width: 100%; padding: 14px 15px 14px 45px; border-radius: 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 1rem; font-family: var(--font-ui); outline: none; font-weight: 500; box-shadow: var(--shadow-card); transition: 0.3s; }
         .search-box input:focus { border-color: var(--primary); }
         .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-meta); }
 
-        /* Slider */
         .hero-slider { max-width: 1200px; margin: 0 auto 20px; padding: 0 15px; position: relative; }
         .slider-viewport { overflow: hidden; border-radius: 20px; height: 350px; position: relative; box-shadow: var(--shadow-card); }
         .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
@@ -100,32 +99,51 @@
         /* Artigo View */
         #article-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; overflow-y: auto; padding-bottom: 80px; }
         .article-header { position: sticky; top: 0; background: rgba(var(--bg), 0.95); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; z-index: 100; border-bottom: 1px solid var(--border); }
-        
         .article-container { max-width: 800px; margin: 0 auto; padding: 25px 20px; background: var(--card); min-height: 100vh; }
         .article-tag { display: inline-block; background: var(--primary); color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 18px; }
         .article-title { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 900; line-height: 1.2; margin-bottom: 25px; color: var(--text); }
-        
         .article-actions-bar { display: flex; justify-content: center; gap: 30px; padding: 15px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 30px; background: var(--surface); border-radius: 12px; }
         .action-icon { background: none; border: none; color: var(--text-meta); font-size: 1.3rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.75rem; font-family: var(--font-ui); font-weight: 700; transition: 0.2s; }
         .action-icon.active { color: var(--primary); transform: scale(1.1); }
         .action-icon i { font-size: 1.5rem; }
-
         .article-main-img { width: 100%; border-radius: 16px; margin-bottom: 30px; object-fit: cover; max-height: 400px; box-shadow: var(--shadow-card); }
         .article-content { font-size: 1.1rem; line-height: 1.8; color: var(--text); }
         .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; height: auto; }
 
-        /* Botões Animados Bottom Nav */
+        /* Nova Aba Menu / Informações */
+        .menu-wrapper { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .menu-section { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow-card); }
+        .menu-section h3 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--text); margin-bottom: 20px; border-bottom: 2px solid var(--surface); padding-bottom: 10px; }
+        .menu-text { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
+        .menu-text strong { color: var(--text); }
+        .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+        .menu-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .menu-list-item i.left-icon { width: 30px; color: var(--primary); font-size: 1.2rem; }
+
+        /* Popups / Modais */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px; }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-content { background: var(--card); border-radius: 20px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 30px; box-shadow: var(--shadow-app); position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 1.2rem; }
+        .modal-content h3 { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 15px; color: var(--text); }
+        .modal-content p { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
+
+        /* Cookies Banner */
+        .cookie-banner { position: fixed; bottom: calc(var(--nav-height) + 15px); left: 15px; right: 15px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-app); padding: 20px; border-radius: 16px; z-index: 2500; display: none; max-width: 600px; margin: 0 auto; animation: popIn 0.5s forwards; }
+        .cookie-banner p { font-size: 0.85rem; color: var(--text-meta); margin-bottom: 15px; line-height: 1.5; }
+        .cookie-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-family: var(--font-ui); transition: 0.2s; }
+        .cookie-btn:active { transform: scale(0.98); }
+
+        /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(var(--surface), 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-app); padding-bottom: env(safe-area-inset-bottom); transition: 0.3s transform; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-meta); font-size: 0.7rem; font-weight: 700; cursor: pointer; flex: 1; height: 100%; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .nav-item i { font-size: 1.4rem; margin-bottom: 4px; transition: 0.3s; }
         .nav-item.active { color: var(--primary); transform: translateY(-5px); }
         .nav-item.active i { transform: scale(1.2); }
 
-        /* FAB - Seta Flutuante Inteligente */
         .scroll-fab { position: fixed; right: 20px; bottom: calc(var(--nav-height) + 20px); width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(153, 27, 27, 0.4); transition: 0.3s; z-index: 1500; }
         .scroll-fab:active { transform: scale(0.9); }
 
-        /* Loading */
         .loader { text-align: center; padding: 40px; color: var(--text-meta); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
         @media (min-width: 768px) {
@@ -133,6 +151,7 @@
             body { padding-bottom: 0; }
             .scroll-fab { bottom: 30px; }
             .article-title { font-size: 2.8rem; }
+            .cookie-banner { bottom: 30px; }
         }
     </style>
 </head>
@@ -173,6 +192,45 @@
     </div>
 </div>
 
+<div id="menu-view" class="app-view">
+    <div class="menu-wrapper">
+        
+        <div class="menu-section" style="text-align: center;">
+            <h3>Clima Local</h3>
+            <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                <iframe src="https://www.meteoblue.com/pt/tempo/widget/daily/?geoloc=detect&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&days=7&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&winddirection=1&uv=0&humidity=0&precipitation=1&precipitationprobability=1&spot=1&pressure=0&layout=light&user_key=4e1a2ed173f1ff7f&embed_key=39a231a5f88f1a1d&sig=ba98331c741ff98161d86ffd1ba35f53e38f4cf043cd1819f9659ee7944bd714" frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; max-width: 378px; height: 371px; border: 0; overflow: hidden; border-radius: 12px; box-shadow: var(--shadow-card);"></iframe>
+                <div style="margin-top: 10px; font-size: 0.75rem;"><a href="https://www.meteoblue.com/pt/tempo/semana/index" target="_blank" rel="noopener" style="color: var(--text-meta); text-decoration: none;">Fornecido por meteoblue</a></div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3>Quem Somos & Direitos Autorais</h3>
+            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um blogueiro apaixonado pela Leitura, Notícia e Programação.</p>
+            <p class="menu-text">Com mais de 2 anos de experiência e sempre expandindo o seu conhecimento, criou este Agregador com o objetivo de unir, num só lugar, várias fontes de informação credíveis de Moçambique.</p>
+            <div style="background: var(--bg); padding: 15px; border-radius: 12px; border-left: 4px solid var(--primary); margin-top: 20px;">
+                <p class="menu-text" style="margin-bottom: 0; font-size: 0.85rem;"><strong>Aviso de Direitos:</strong> Tudo o que é partilhado neste agregador é proveniente de fontes credíveis. Respeitamos integralmente os Direitos de Autor dos sites originais e dos respetivos jornalistas. O nosso papel é apenas o de facilitar o acesso à informação, redirecionando o tráfego para as fontes oficiais.</p>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3>Mais Informações</h3>
+            <div class="menu-list-item" onclick="openModal('modal-contactos')">
+                <div><i class="fas fa-address-book left-icon"></i> Contactos</div>
+                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
+            </div>
+            <div class="menu-list-item" onclick="openModal('modal-privacidade')">
+                <div><i class="fas fa-user-shield left-icon"></i> Política de Privacidade</div>
+                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
+            </div>
+            <div class="menu-list-item" onclick="openModal('modal-cookies')">
+                <div><i class="fas fa-cookie-bite left-icon"></i> Política de Cookies</div>
+                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div id="article-view" class="app-view">
     <div class="article-header">
         <button class="icon-btn" onclick="goBackHistory()"><i class="fas fa-arrow-left"></i></button>
@@ -208,9 +266,9 @@
         <i class="fas fa-bookmark"></i>
         <span>Guardados</span>
     </div>
-    <div class="nav-item" onclick="switchTab('liked', this)">
-        <i class="fas fa-heart"></i>
-        <span>Favoritos</span>
+    <div class="nav-item" onclick="switchTab('menu', this)">
+        <i class="fas fa-bars"></i>
+        <span>Menu</span>
     </div>
 </nav>
 
@@ -218,8 +276,50 @@
     <i class="fas fa-arrow-down"></i>
 </button>
 
+<div class="cookie-banner" id="cookie-banner">
+    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
+        <i class="fas fa-cookie-bite" style="font-size: 2rem; color: var(--primary);"></i>
+        <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--text);">Utilizamos Cookies</h4>
+    </div>
+    <p>Este agregador utiliza cookies para melhorar a sua experiência, fornecer conteúdos relevantes e analisar o tráfego. Ao continuar a navegar, concorda com a nossa Política de Cookies.</p>
+    <button class="cookie-btn" onclick="acceptCookies()">Aceitar e Fechar</button>
+</div>
+
+<div class="modal-overlay" id="modal-contactos" onclick="closeModal(event, 'modal-contactos')">
+    <div class="modal-content">
+        <button class="modal-close" onclick="forceClose('modal-contactos')"><i class="fas fa-times"></i></button>
+        <h3>Fale Connosco</h3>
+        <p>Para qualquer questão, sugestão ou parceria comercial, entre em contacto direto com o criador (Donaldo F. Rodrigues):</p>
+        <p><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.2rem; margin-right:8px;"></i> <strong>WhatsApp / Telefone:</strong><br> +258 85 908 5157 <br> +258 83 416 9259</p>
+        <p><i class="fas fa-envelope" style="color:var(--primary); font-size:1.2rem; margin-right:8px;"></i> <strong>Email:</strong><br> donald.bj.bj@gmail.com</p>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-privacidade" onclick="closeModal(event, 'modal-privacidade')">
+    <div class="modal-content">
+        <button class="modal-close" onclick="forceClose('modal-privacidade')"><i class="fas fa-times"></i></button>
+        <h3>Política de Privacidade</h3>
+        <p>A proteção dos seus dados é prioritária. Não recolhemos dados sensíveis ou informações pessoais sem o seu consentimento explícito.</p>
+        <p>O agregador funciona guardando as suas preferências (como notícias "Guardadas" ou "Favoritas" e modo noturno) localmente no seu dispositivo através do LocalStorage do navegador, sem enviar esses dados para servidores externos.</p>
+        <p>Como utilizamos APIs públicas de jornais de Moçambique, a política de privacidade das imagens e dos conteúdos integrais aplica-se aos sites originais que as publicaram.</p>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-cookies" onclick="closeModal(event, 'modal-cookies')">
+    <div class="modal-content">
+        <button class="modal-close" onclick="forceClose('modal-cookies')"><i class="fas fa-times"></i></button>
+        <h3>Política de Cookies</h3>
+        <p>Utilizamos cookies essenciais para garantir que a aplicação web (PWA) funcione corretamente. Estes cookies guardam informações básicas como:</p>
+        <ul style="color: var(--text-meta); font-size: 0.95rem; margin-left: 20px; line-height: 1.6; margin-bottom: 15px;">
+            <li>As suas preferências de leitura (Modo Claro/Escuro).</li>
+            <li>Artigos marcados para "Ler Mais Tarde".</li>
+            <li>Sessões de anúncios geridos por terceiros para viabilizar a manutenção da plataforma.</li>
+        </ul>
+        <p>Ao utilizar o nosso agregador, compreende e aceita a aplicação destas tecnologias.</p>
+    </div>
+</div>
+
 <script>
-// TODAS AS 26 FONTES
 const SOURCES = [
     { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
     { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
@@ -259,9 +359,7 @@ function extractImage(p) {
     return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Noticia+365';
 }
 
-// CÁLCULO DE TEMPO EXATO COM PRECISÃO DE SEGUNDOS
 function timeAgo(dateString) {
-    // Usar UTC/GMT puro para evitar problemas de fuso horário
     const pubDate = new Date(dateString);
     const now = new Date();
     const diffInSeconds = Math.floor((now - pubDate) / 1000);
@@ -275,18 +373,15 @@ function timeAgo(dateString) {
     const diffInDays = Math.floor(diffInHours / 24);
     if (diffInDays === 1) return "Ontem";
     if (diffInDays < 7) return `${diffInDays} dias atrás`;
-    
     return pubDate.toLocaleDateString('pt-MZ');
 }
 
-// CARREGAMENTO INSTANTÂNEO (PROGRESSIVO) & CACHE BUSTING
 function loadNewsProgressive() {
     if (isFetching) return;
     isFetching = true;
     document.getElementById('scroll-anchor').style.display = 'flex';
 
     let requestsDone = 0;
-    // timestamp garante que ignora o cache antigo do browser
     const cacheBuster = new Date().getTime(); 
 
     SOURCES.forEach(src => {
@@ -297,7 +392,6 @@ function loadNewsProgressive() {
             data.forEach(p => {
                 const id = `${src.slug}-${p.id}`;
                 if (!allPosts.some(x => x.id === id)) {
-                    // Pega a hora GMT (UTC) exata para não ter bugs de fuso
                     const absoluteDate = p.date_gmt ? (p.date_gmt + 'Z') : p.date;
                     allPosts.push({
                         id, title: p.title.rendered, content: p.content?.rendered || "",
@@ -308,7 +402,7 @@ function loadNewsProgressive() {
             });
 
             if (added) {
-                renderFeed(); // Re-renderiza IMEDIATAMENTE (Efeito Cachoeira Real-Time)
+                renderFeed(); 
                 if(currentPage === 1) { buildSlider(); updateTicker(); }
             }
         })
@@ -326,8 +420,6 @@ function loadNewsProgressive() {
 
 function renderFeed() {
     const feed = document.getElementById('feed');
-    
-    // ORDENAÇÃO MATEMÁTICA ABSOLUTA: Novas em Cima Sempre
     allPosts.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
     allPosts.forEach((p, idx) => {
@@ -346,12 +438,9 @@ function renderFeed() {
                 </div>`;
             feed.appendChild(card);
         } else {
-            // Atualiza dinamicamente o tempo na tela sempre que a função roda
             const timeBadge = card.querySelector('.time-badge');
             if(timeBadge) timeBadge.innerHTML = `<i class="far fa-clock"></i> ${timeAgo(p.date)}`;
         }
-
-        // Posiciona Exatamente (InsertBefore) para empurrar antigas para baixo sem piscar
         if(feed.children[idx] !== card) feed.insertBefore(card, feed.children[idx]);
     });
 }
@@ -385,7 +474,6 @@ function updateTicker() {
     }
 }
 
-// LÓGICA DE HISTÓRICO SEQUENCIAL INTACTA
 function openArticle(id, isHistoryPop = false) {
     let post = allPosts.find(p => p.id === id) || 
                JSON.parse(localStorage.getItem('news_saved_365')||'[]').find(p => p.id===id) || 
@@ -399,9 +487,7 @@ function openArticle(id, isHistoryPop = false) {
 
     currentReadingPost = post;
 
-    if (!isHistoryPop) {
-        history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
-    }
+    if (!isHistoryPop) history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
 
     document.getElementById('source-tag').innerText = post.source;
     document.getElementById('article-title').innerHTML = post.title;
@@ -425,13 +511,10 @@ function openArticle(id, isHistoryPop = false) {
     document.getElementById('article-view').classList.add('active');
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
     document.getElementById('scroll-fab').style.display = 'none'; 
-    
     document.getElementById('article-view').scrollTo(0,0);
 }
 
-function goBackHistory() {
-    window.history.back();
-}
+function goBackHistory() { window.history.back(); }
 
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.view === 'article') {
@@ -470,6 +553,9 @@ function switchTab(tabId, element = null) {
                     <div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div>
                 </div>`;
         });
+    } else if (tabId === 'menu') {
+        document.getElementById('menu-view').classList.add('active');
+        document.getElementById('main-header').style.display = 'none';
     }
     window.scrollTo(0,0);
 }
@@ -531,7 +617,28 @@ window.addEventListener('scroll', () => {
     else fab.innerHTML = '<i class="fas fa-arrow-down"></i>';
 });
 
+// FUNÇÕES DOS MODAIS
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+function closeModal(event, id) {
+    if (event.target.id === id) document.getElementById(id).classList.remove('active');
+}
+function forceClose(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+// COOKIE BANNER LOGIC
+function acceptCookies() {
+    localStorage.setItem('cookies_aceites_365', 'sim');
+    document.getElementById('cookie-banner').style.display = 'none';
+}
+
 window.onload = () => {
+    if(!localStorage.getItem('cookies_aceites_365')) {
+        setTimeout(() => { document.getElementById('cookie-banner').style.display = 'block'; }, 1500);
+    }
+
     history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
 
     const params = new URLSearchParams(window.location.search);
