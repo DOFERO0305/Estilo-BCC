@@ -217,7 +217,6 @@
             100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } 
         }
 
-        /* O BOTÃO SCROLL-TOP MOVIDO PARA A ESQUERDA PARA NÃO CHOCAR */
         .scroll-fab { position: fixed; left: 15px; right: auto; bottom: calc(var(--nav-height) + 15px); width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; border: none; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1400; transition: 0.3s; opacity: 0; pointer-events: none; }
         .scroll-fab.visible { opacity: 1; pointer-events: auto; }
         .scroll-fab:active { transform: scale(0.9); }
@@ -390,7 +389,6 @@
 </div>
 
 <script>
-// Desativa a restauração automática do scroll do navegador que causava o erro
 if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
 if ('serviceWorker' in navigator) {
@@ -461,7 +459,6 @@ function updateSavedBadge() {
     }
 }
 
-// Otimização: Carrega instantaneamente o que há na memória
 function loadAppShell() {
     let offlineData = JSON.parse(localStorage.getItem('offline_cache_365') || '[]');
     if (offlineData.length > 0) {
@@ -487,7 +484,6 @@ function loadNewsProgressive() {
     const cacheBuster = new Date().getTime(); 
 
     SOURCES.forEach(src => {
-        // Otimização 3G/4G: Pede apenas o conteúdo necessário (_embed=wp:featuredmedia)
         fetch(`${src.api}?_embed=wp:featuredmedia&per_page=4&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
         .then(res => res.ok ? res.json() : [])
         .then(data => {
@@ -635,61 +631,67 @@ function openArticle(id, isHistoryPop = false) {
     document.getElementById('article-view').classList.add('active-slide');
     
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
-    document.getElementById('home-fabs').style.display = 'none'; // Esconde Fabs na noticia
+    document.getElementById('home-fabs').style.display = 'none'; 
     
-    // CORREÇÃO DO ERRO DE SCROLL NA NOTÍCIA (Força início imediato)
-    setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-    }, 10);
+    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, 10);
 }
 
+// CORREÇÃO: O Botão Voltar agora recua exatamente para onde o utilizador estava
 function goBackHistory() { 
-    if (window.history.length > 1 && document.referrer.includes(window.location.host)) { 
+    if (window.history.length > 1) { 
         window.history.back(); 
     } else { 
-        goToHome(); 
+        switchTab('home'); 
     }
 }
 
 function goToHome() { 
-    switchTab('home', document.querySelector('.nav-item')); 
-    window.history.pushState({ view: 'home' }, "", window.location.pathname);
-    window.scrollTo({ top: 0, behavior: 'instant' }); 
+    switchTab('home'); 
 }
 
+// CORREÇÃO DO HISTÓRICO - Identifica se estava na aba Guardados, Home ou Menu
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.view === 'article') { 
         openArticle(e.state.id, true); 
+    } else if (e.state && (e.state.view === 'home' || e.state.view === 'saved' || e.state.view === 'menu')) {
+        switchTab(e.state.view, null, true);
     } else {
-        document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
-        document.getElementById('home-view').classList.add('active-fade');
-        
-        document.getElementById('bottom-nav').style.transform = 'translateY(0)';
-        document.getElementById('home-fabs').style.display = 'flex';
-        
-        currentReadingPost = null;
-        document.getElementById('page-title').innerText = "Notícia 365 | O Maior Agregador de Moçambique";
-        
-        window.history.replaceState({ view: 'home' }, "", window.location.pathname);
-        
-        // DEVOLVE AO PONTO EXATO DO FEED
-        setTimeout(() => {
-            window.scrollTo({ top: homeScrollPos, behavior: 'instant' });
-        }, 10);
+        switchTab('home', null, true);
     }
 });
 
-function switchTab(tabId, element = null) {
-    if(element) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
+// A Função centralizada de navegação assegura que a Barra Inferior reaparece sempre
+function switchTab(tabId, element = null, isHistoryPop = false) {
+    
+    if(element) { 
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); 
+        element.classList.add('active'); 
+    } else {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        if(tabId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+        else if(tabId === 'saved') document.querySelectorAll('.nav-item')[1].classList.add('active');
+        else if(tabId === 'menu') document.querySelectorAll('.nav-item')[2].classList.add('active');
+    }
+
     document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
     
-    window.history.replaceState({ view: tabId }, "", window.location.pathname);
+    // Força a exibição da Barra Inferior e dos Botões Flutuantes
+    document.getElementById('bottom-nav').style.transform = 'translateY(0)';
     document.getElementById('home-fabs').style.display = (tabId === 'home') ? 'flex' : 'none';
 
+    // Grava a aba ativa no histórico para que o 'Voltar' funcione
+    if(!isHistoryPop) {
+        window.history.replaceState({ view: tabId }, "", window.location.pathname);
+    }
+
     if(tabId === 'home') {
-        document.getElementById('home-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'block';
-    } else if (tabId === 'saved') {
-        document.getElementById('lists-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'none';
+        document.getElementById('home-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'block';
+        setTimeout(() => window.scrollTo({ top: homeScrollPos, behavior: 'instant' }), 10);
+    } 
+    else if (tabId === 'saved') {
+        document.getElementById('lists-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'none';
         const list = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
         const feed = document.getElementById('list-feed');
         feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px;">A lista está vazia.</p>' : '';
@@ -698,10 +700,13 @@ function switchTab(tabId, element = null) {
                 <div class="news-img-wrap"><img class="news-img" src="${p.img}" loading="lazy"></div>
                 <div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div>
             </div>`);
-    } else if (tabId === 'menu') {
-        document.getElementById('menu-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'none';
+        window.scrollTo(0,0);
+    } 
+    else if (tabId === 'menu') {
+        document.getElementById('menu-view').classList.add('active-fade'); 
+        document.getElementById('main-header').style.display = 'none';
+        window.scrollTo(0,0);
     }
-    window.scrollTo(0,0);
 }
 
 function toggleSaveArticle() {
@@ -788,16 +793,14 @@ window.addEventListener('scroll', () => {
 
 window.onload = () => {
     updateSavedBadge(); 
-    loadAppShell(); // Carrega memória cache de imediato
-    
-    history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
+    loadAppShell(); 
     
     const params = new URLSearchParams(window.location.search);
     if(params.get('noticia')) {
         const id = params.get('noticia');
         const src = SOURCES.find(s => s.slug === id.split('-')[0]);
         if(src) {
-            // Otimização no pedido individual da notícia
+            window.history.replaceState({ view: 'home' }, "", window.location.pathname);
             fetch(`${src.api}/${id.split('-')[1]}?_embed=wp:featuredmedia`).then(r => r.json()).then(d => {
                 if(d) {
                     const absDate = d.date_gmt ? (d.date_gmt + 'Z') : d.date;
@@ -813,7 +816,6 @@ window.onload = () => {
     const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "500px"});
     obs.observe(document.getElementById('scroll-anchor'));
     
-    // Inicia a busca real em segundo plano
     setTimeout(loadNewsProgressive, 500); 
 };
 </script>
