@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff" id="theme-color-meta">
     
     <title id="page-title">Notícia 365 | O Maior Agregador de Moçambique</title>
-    <meta name="description" id="meta-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
+    <meta name="description" id="meta-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar. Otimizado para redes lentas.">
     
     <meta property="og:title" id="og-title" content="Notícia 365 | Portal Premium">
     <meta property="og:description" id="og-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
@@ -59,7 +59,7 @@
             --shadow-nav: 0 -5px 20px rgba(0, 0, 0, 0.9);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; scroll-behavior: auto; }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.4s ease, color 0.4s ease; }
         
         .app-view { display: none; width: 100%; min-height: 100vh; position: absolute; top: 0; left: 0; background: var(--bg); padding-bottom: 80px; }
@@ -95,12 +95,6 @@
         .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px 20px 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3), transparent); color: white; }
         .slide-tag { background: var(--primary); color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: inline-block; letter-spacing: 0.5px; }
         .slide-title { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.3; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-
-        /* Botão Ver Novas Publicações */
-        .refresh-btn-wrap { text-align: center; margin: 0 auto 20px; padding: 0 15px; }
-        .btn-refresh { background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px; font-weight: 800; font-size: 0.85rem; border: none; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; font-family: var(--font-ui); text-transform: uppercase; }
-        .btn-refresh:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(220, 38, 38, 0.5); }
-        .btn-refresh i { font-size: 1rem; }
 
         /* FEED DE NOTÍCIAS */
         .feed { padding: 0 15px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
@@ -209,7 +203,23 @@
         .nav-icon-wrap { position: relative; display: inline-block; }
         .badge-counter { position: absolute; top: -6px; right: -8px; background: var(--primary); color: #fff; font-size: 0.6rem; font-weight: 900; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; border: 2px solid var(--header-bg); }
 
-        .scroll-fab { position: fixed; right: 15px; bottom: calc(var(--nav-height) + 15px); width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4); z-index: 1500; transition: 0.3s; }
+        /* BOTÕES FLUTUANTES DA PÁGINA INICIAL (À DIREITA) */
+        .home-fabs { position: fixed; right: 15px; bottom: calc(var(--nav-height) + 15px); display: flex; flex-direction: column; gap: 12px; z-index: 1500; }
+        .fab-action { width: 50px; height: 50px; border-radius: 50%; border: none; color: white; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .fab-action:hover { transform: scale(1.15); }
+        
+        .fab-share-app { background: #10b981; animation: pulseShare 2s infinite; }
+        .fab-refresh-feed { background: var(--primary); }
+        
+        @keyframes pulseShare { 
+            0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); } 
+            70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } 
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } 
+        }
+
+        /* O BOTÃO SCROLL-TOP MOVIDO PARA A ESQUERDA PARA NÃO CHOCAR */
+        .scroll-fab { position: fixed; left: 15px; right: auto; bottom: calc(var(--nav-height) + 15px); width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; border: none; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1400; transition: 0.3s; opacity: 0; pointer-events: none; }
+        .scroll-fab.visible { opacity: 1; pointer-events: auto; }
         .scroll-fab:active { transform: scale(0.9); }
         
         .loader { text-align: center; padding: 40px 15px; color: var(--text-meta); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -259,14 +269,13 @@
         <div class="slider-viewport"><div class="slider-track" id="slider-track"></div></div>
     </div>
 
-    <div class="refresh-btn-wrap">
-        <button class="btn-refresh" onclick="manualRefresh()">
-            <i class="fas fa-sync-alt" id="refresh-icon"></i> Ver Novas Publicações
-        </button>
-    </div>
-
     <main class="feed" id="feed"></main>
     <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> A detetar publicações recentes...</div>
+</div>
+
+<div class="home-fabs" id="home-fabs">
+    <button class="fab-action fab-share-app" onclick="shareAppGlobal()"><i class="fas fa-share-nodes"></i></button>
+    <button class="fab-action fab-refresh-feed" onclick="manualRefresh()"><i class="fas fa-sync-alt" id="refresh-icon"></i></button>
 </div>
 
 <div id="lists-view" class="app-view">
@@ -313,7 +322,7 @@
     <main class="article-container">
         
         <div class="article-hero">
-            <img id="feat-img" class="article-hero-img" src="">
+            <img id="feat-img" class="article-hero-img" src="" loading="eager">
             <div class="article-hero-content">
                 <div id="source-tag" class="article-hero-tag">...</div>
                 <h1 id="article-title" class="article-hero-title">...</h1>
@@ -324,7 +333,7 @@
             <button class="btn-premium btn-voltar" onclick="goBackHistory()"><i class="fas fa-arrow-left"></i> Voltar</button>
             <button class="btn-premium btn-inicio" onclick="goToHome()"><i class="fas fa-home"></i> Início</button>
             <button class="btn-premium btn-guardar" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark" id="save-icon"></i> <span id="save-text">Guardar</span></button>
-            <button class="btn-premium btn-partilhar" onclick="shareGlobal()"><i class="fas fa-share-nodes"></i> Partilhar</button>
+            <button class="btn-premium btn-partilhar" onclick="shareArticle()"><i class="fas fa-share-nodes"></i> Partilhar</button>
         </div>
 
         <div id="article-content" class="article-content"></div>
@@ -360,7 +369,7 @@
     </div>
 </nav>
 
-<button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()"><i class="fas fa-arrow-down"></i></button>
+<button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()"><i class="fas fa-arrow-up"></i></button>
 
 <div class="modal-overlay" id="modal-contactos" onclick="closeModal(event, 'modal-contactos')">
     <div class="modal-content">
@@ -381,40 +390,42 @@
 </div>
 
 <script>
+// Desativa a restauração automática do scroll do navegador que causava o erro
+if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(e => {}); });
 }
 
-// TOTAL AGORA SÃO 28 FONTES!
 const SOURCES = [
-    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
-    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
-    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts?_embed", slug: "mznews" },
-    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts?_embed", slug: "folha" },
-    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts?_embed", slug: "evidencias" },
-    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts?_embed", slug: "integrity" },
-    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts?_embed", slug: "savana" },
-    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts?_embed", slug: "aim" },
-    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?_embed", slug: "noticias" },
-    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts?_embed", slug: "diario" },
-    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts?_embed", slug: "timesdetodos" },
-    { name: "360 Mozambique", api: "https://360mozambique.com/wp-json/wp/v2/posts?_embed", slug: "360moz" },
-    { name: "O Económico", api: "https://www.oeconomico.com/wp-json/wp/v2/posts?_embed", slug: "oeconomico" },
-    { name: "Club of Moz", api: "https://clubofmozambique.com/wp-json/wp/v2/posts?_embed", slug: "clubmz" },
-    { name: "Ikweli", api: "https://ikweli.co.mz/wp-json/wp/v2/posts?_embed", slug: "ikweli" },
-    { name: "Jornal Rigor", api: "https://jornalrigor.co.mz/wp-json/wp/v2/posts?_embed", slug: "rigor" },
-    { name: "Jornal Desafio", api: "https://www.jornaldesafio.co.mz/wp-json/wp/v2/posts?_embed", slug: "desafio" },
-    { name: "Canal de Moz", api: "https://canal.co.mz/wp-json/wp/v2/posts?_embed", slug: "canal" },
-    { name: "Wamphula Fax", api: "https://www.wamphulafax.co.mz/wp-json/wp/v2/posts?_embed", slug: "wamphula" },
-    { name: "Moz Times", api: "https://moztimes.com/wp-json/wp/v2/posts?_embed", slug: "moztimes" },
-    { name: "Zumbo FM", api: "https://zumbofm.com/wp-json/wp/v2/posts?_embed", slug: "zumbo" },
-    { name: "Zitamar", api: "https://www.zitamar.com/wp-json/wp/v2/posts?_embed", slug: "zitamar" },
-    { name: "Chuabo FM", api: "https://chuabofm.com/wp-json/wp/v2/posts?_embed", slug: "chuabo" },
-    { name: "CDD Moz", api: "https://cddmoz.org/wp-json/wp/v2/posts?_embed", slug: "cdd" },
-    { name: "CIP Moz", api: "https://www.cipmoz.org/wp-json/wp/v2/posts?_embed", slug: "cip" },
-    { name: "PDecide", api: "https://pdecide.org/wp-json/wp/v2/posts?_embed", slug: "pdecide" },
-    { name: "Jornal Domingo", api: "https://jornaldomingo.co.mz/wp-json/wp/v2/posts?_embed", slug: "domingo" },
-    { name: "O Destaque", api: "https://odestaque.co.mz/wp-json/wp/v2/posts?_embed", slug: "destaque" }
+    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts", slug: "opais" },
+    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts", slug: "carta" },
+    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts", slug: "mznews" },
+    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts", slug: "folha" },
+    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts", slug: "evidencias" },
+    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts", slug: "integrity" },
+    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts", slug: "savana" },
+    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts", slug: "aim" },
+    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts", slug: "noticias" },
+    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts", slug: "diario" },
+    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts", slug: "timesdetodos" },
+    { name: "360 Mozambique", api: "https://360mozambique.com/wp-json/wp/v2/posts", slug: "360moz" },
+    { name: "O Económico", api: "https://www.oeconomico.com/wp-json/wp/v2/posts", slug: "oeconomico" },
+    { name: "Club of Moz", api: "https://clubofmozambique.com/wp-json/wp/v2/posts", slug: "clubmz" },
+    { name: "Ikweli", api: "https://ikweli.co.mz/wp-json/wp/v2/posts", slug: "ikweli" },
+    { name: "Jornal Rigor", api: "https://jornalrigor.co.mz/wp-json/wp/v2/posts", slug: "rigor" },
+    { name: "Jornal Desafio", api: "https://www.jornaldesafio.co.mz/wp-json/wp/v2/posts", slug: "desafio" },
+    { name: "Canal de Moz", api: "https://canal.co.mz/wp-json/wp/v2/posts", slug: "canal" },
+    { name: "Wamphula Fax", api: "https://www.wamphulafax.co.mz/wp-json/wp/v2/posts", slug: "wamphula" },
+    { name: "Moz Times", api: "https://moztimes.com/wp-json/wp/v2/posts", slug: "moztimes" },
+    { name: "Zumbo FM", api: "https://zumbofm.com/wp-json/wp/v2/posts", slug: "zumbo" },
+    { name: "Zitamar", api: "https://www.zitamar.com/wp-json/wp/v2/posts", slug: "zitamar" },
+    { name: "Chuabo FM", api: "https://chuabofm.com/wp-json/wp/v2/posts", slug: "chuabo" },
+    { name: "CDD Moz", api: "https://cddmoz.org/wp-json/wp/v2/posts", slug: "cdd" },
+    { name: "CIP Moz", api: "https://www.cipmoz.org/wp-json/wp/v2/posts", slug: "cip" },
+    { name: "PDecide", api: "https://pdecide.org/wp-json/wp/v2/posts", slug: "pdecide" },
+    { name: "Jornal Domingo", api: "https://jornaldomingo.co.mz/wp-json/wp/v2/posts", slug: "domingo" },
+    { name: "O Destaque", api: "https://odestaque.co.mz/wp-json/wp/v2/posts", slug: "destaque" }
 ];
 
 let allPosts = [], currentPage = 1, isFetching = false;
@@ -450,14 +461,23 @@ function updateSavedBadge() {
     }
 }
 
+// Otimização: Carrega instantaneamente o que há na memória
+function loadAppShell() {
+    let offlineData = JSON.parse(localStorage.getItem('offline_cache_365') || '[]');
+    if (offlineData.length > 0) {
+        allPosts = offlineData;
+        renderFeed();
+        buildSlider();
+        updateTicker();
+    }
+}
+
 function loadNewsProgressive() {
     if (isFetching) return;
     
     if (!navigator.onLine) {
         document.getElementById('offline-msg').style.display = 'block';
         document.getElementById('scroll-anchor').style.display = 'none';
-        const offlineData = JSON.parse(localStorage.getItem('offline_cache_365') || '[]');
-        if (allPosts.length === 0 && offlineData.length > 0) { allPosts = offlineData; renderFeed(); buildSlider(); }
         return;
     }
 
@@ -467,7 +487,8 @@ function loadNewsProgressive() {
     const cacheBuster = new Date().getTime(); 
 
     SOURCES.forEach(src => {
-        fetch(`${src.api}&per_page=4&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
+        // Otimização 3G/4G: Pede apenas o conteúdo necessário (_embed=wp:featuredmedia)
+        fetch(`${src.api}?_embed=wp:featuredmedia&per_page=4&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
         .then(res => res.ok ? res.json() : [])
         .then(data => {
             let added = false;
@@ -498,12 +519,11 @@ function loadNewsProgressive() {
     });
 }
 
-// SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA EM SEGUNDO PLANO (LIVE FEED)
 function backgroundFetchNew() {
     if(!navigator.onLine) return;
     const cacheBuster = new Date().getTime(); 
     SOURCES.forEach(src => {
-        fetch(`${src.api}&per_page=3&page=1&_t=${cacheBuster}`)
+        fetch(`${src.api}?_embed=wp:featuredmedia&per_page=3&page=1&_t=${cacheBuster}`)
         .then(res => res.ok ? res.json() : [])
         .then(data => {
             let added = false;
@@ -526,14 +546,13 @@ function manualRefresh() {
     const icon = document.getElementById('refresh-icon');
     icon.classList.add('fa-spin');
     backgroundFetchNew();
-    setTimeout(() => { icon.classList.remove('fa-spin'); }, 2000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => { icon.classList.remove('fa-spin'); }, 1500);
 }
 
-// Verifica se há notícias novas sempre que a pessoa volta a abrir o Chrome/Aba
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') backgroundFetchNew();
 });
-// Atualiza silenciosamente a cada 5 minutos
 setInterval(backgroundFetchNew, 300000); 
 
 function renderFeed() {
@@ -565,7 +584,7 @@ function buildSlider() {
     const top10 = allPosts.slice(0, 10);
     if(top10.length === 0) return;
     document.getElementById('hero-slider').style.display = 'block';
-    track.innerHTML = top10.map(p => `<div class="slide" onclick="openArticle('${p.id}')"><img src="${p.img}"><div class="slide-content"><span class="slide-tag">${p.source}</span><h2 class="slide-title">${p.title}</h2></div></div>`).join('');
+    track.innerHTML = top10.map(p => `<div class="slide" onclick="openArticle('${p.id}')"><img src="${p.img}" loading="lazy"><div class="slide-content"><span class="slide-tag">${p.source}</span><h2 class="slide-title">${p.title}</h2></div></div>`).join('');
     clearInterval(sliderInterval);
     let idx = 0;
     sliderInterval = setInterval(() => { idx = (idx + 1) % top10.length; track.style.transform = `translateX(-${idx * 100}%)`; }, 5000);
@@ -606,7 +625,7 @@ function openArticle(id, isHistoryPop = false) {
     const grid = document.getElementById('related-grid');
     grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `
         <div class="news-card" onclick="openArticle('${r.id}')" style="height: 180px;">
-            <div class="news-img-wrap"><img class="news-img" src="${r.img}"></div>
+            <div class="news-img-wrap"><img class="news-img" src="${r.img}" loading="lazy"></div>
             <div class="news-body" style="padding:15px;">
                 <h4 class="news-title" style="font-size:0.95rem; margin-bottom:0;">${r.title}</h4>
             </div>
@@ -616,19 +635,24 @@ function openArticle(id, isHistoryPop = false) {
     document.getElementById('article-view').classList.add('active-slide');
     
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
-    document.getElementById('scroll-fab').style.display = 'none'; 
+    document.getElementById('home-fabs').style.display = 'none'; // Esconde Fabs na noticia
     
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    // CORREÇÃO DO ERRO DE SCROLL NA NOTÍCIA (Força início imediato)
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 10);
 }
 
-// CORREÇÃO DO PROBLEMA DO LINK NO REFRESH!
 function goBackHistory() { 
-    if (window.history.length > 1) { window.history.back(); } else { goToHome(); }
+    if (window.history.length > 1 && document.referrer.includes(window.location.host)) { 
+        window.history.back(); 
+    } else { 
+        goToHome(); 
+    }
 }
 
 function goToHome() { 
     switchTab('home', document.querySelector('.nav-item')); 
-    // Limpa a URL imediatamente para que o refresh funcione perfeitamente
     window.history.pushState({ view: 'home' }, "", window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'instant' }); 
 }
@@ -641,14 +665,17 @@ window.addEventListener('popstate', (e) => {
         document.getElementById('home-view').classList.add('active-fade');
         
         document.getElementById('bottom-nav').style.transform = 'translateY(0)';
-        document.getElementById('scroll-fab').style.display = 'flex';
+        document.getElementById('home-fabs').style.display = 'flex';
+        
         currentReadingPost = null;
         document.getElementById('page-title').innerText = "Notícia 365 | O Maior Agregador de Moçambique";
         
-        // Garante a remoção forçada do link ?noticia= quando a pessoa volta!
         window.history.replaceState({ view: 'home' }, "", window.location.pathname);
         
-        window.scrollTo({ top: homeScrollPos, behavior: 'instant' });
+        // DEVOLVE AO PONTO EXATO DO FEED
+        setTimeout(() => {
+            window.scrollTo({ top: homeScrollPos, behavior: 'instant' });
+        }, 10);
     }
 });
 
@@ -656,8 +683,8 @@ function switchTab(tabId, element = null) {
     if(element) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
     document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
     
-    // Sempre que clicar nos botões do menu inferior, certificar de que limpamos o link
     window.history.replaceState({ view: tabId }, "", window.location.pathname);
+    document.getElementById('home-fabs').style.display = (tabId === 'home') ? 'flex' : 'none';
 
     if(tabId === 'home') {
         document.getElementById('home-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'block';
@@ -668,7 +695,7 @@ function switchTab(tabId, element = null) {
         feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px;">A lista está vazia.</p>' : '';
         list.forEach(p => feed.innerHTML += `
             <div class="news-card" onclick="openArticle('${p.id}')">
-                <div class="news-img-wrap"><img class="news-img" src="${p.img}"></div>
+                <div class="news-img-wrap"><img class="news-img" src="${p.img}" loading="lazy"></div>
                 <div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div>
             </div>`);
     } else if (tabId === 'menu') {
@@ -708,11 +735,11 @@ function toggleTheme() {
     document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#ffffff");
 }
 
-function shareGlobal() {
+function shareArticle() {
     if(!currentReadingPost) return;
     const linkParaPartilhar = window.location.href; 
     const titulo = `🔴 Leia no Notícia 365: ${currentReadingPost.title}`;
-    const textoCompleto = `*${currentReadingPost.title}*\n\nFonte: _${currentReadingPost.source}_\n\nLeia a reportagem no nosso portal aqui:\n${linkParaPartilhar}`;
+    const textoCompleto = `*${currentReadingPost.title}*\n\nFonte: _${currentReadingPost.source}_\n\nLeia a reportagem completa aqui:\n${linkParaPartilhar}`;
 
     if (navigator.share) {
         navigator.share({ title: currentReadingPost.title, text: titulo, url: linkParaPartilhar }).catch(err => console.log('Partilha cancelada', err));
@@ -721,15 +748,27 @@ function shareGlobal() {
     }
 }
 
+function shareAppGlobal() {
+    const url = window.location.href.split('?')[0];
+    const text = "Acompanhe as últimas notícias de Moçambique no Notícia 365. O maior agregador do país!";
+    if(navigator.share) {
+        navigator.share({ title: "Notícia 365", text: text, url: url }).catch(e=>console.log(e));
+    } else {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`);
+    }
+}
+
 function handleScrollFab() {
-    if (window.scrollY > 500) window.scrollTo({ top: 0, behavior: 'smooth' });
-    else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 window.addEventListener('scroll', () => {
     const fab = document.getElementById('scroll-fab');
-    if (window.scrollY > 500) fab.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    else fab.innerHTML = '<i class="fas fa-arrow-down"></i>';
+    if (window.scrollY > 800) {
+        fab.classList.add('visible');
+    } else {
+        fab.classList.remove('visible');
+    }
 });
 
 function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -748,7 +787,9 @@ window.addEventListener('scroll', () => {
 }, {passive: true});
 
 window.onload = () => {
-    updateSavedBadge(); // Inicializa o contador de Guardados
+    updateSavedBadge(); 
+    loadAppShell(); // Carrega memória cache de imediato
+    
     history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
     
     const params = new URLSearchParams(window.location.search);
@@ -756,22 +797,24 @@ window.onload = () => {
         const id = params.get('noticia');
         const src = SOURCES.find(s => s.slug === id.split('-')[0]);
         if(src) {
-            fetch(`${src.api}&include=${id.split('-')[1]}`).then(r => r.json()).then(d => {
-                if(d[0]) {
-                    const absDate = d[0].date_gmt ? (d[0].date_gmt + 'Z') : d[0].date;
-                    allPosts.push({ id, title: d[0].title.rendered, content: d[0].content.rendered, img: extractImage(d[0]), source: src.name, link: d[0].link, date: absDate });
+            // Otimização no pedido individual da notícia
+            fetch(`${src.api}/${id.split('-')[1]}?_embed=wp:featuredmedia`).then(r => r.json()).then(d => {
+                if(d) {
+                    const absDate = d.date_gmt ? (d.date_gmt + 'Z') : d.date;
+                    allPosts.push({ id, title: d.title.rendered, content: d.content.rendered, img: extractImage(d), source: src.name, link: d.link, date: absDate });
                     openArticle(id, false);
                 }
             });
         }
     } else {
-        // Força limpeza da URL no arranque normal
         window.history.replaceState({ view: 'home' }, "", window.location.pathname);
     }
     
     const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "500px"});
     obs.observe(document.getElementById('scroll-anchor'));
-    loadNewsProgressive();
+    
+    // Inicia a busca real em segundo plano
+    setTimeout(loadNewsProgressive, 500); 
 };
 </script>
 
