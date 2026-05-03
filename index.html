@@ -17,102 +17,177 @@
     
     <meta property="og:title" id="og-title" content="Notícia 365 | Portal Premium">
     <meta property="og:description" id="og-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
-    <meta property="og:image" id="og-image" content="https://via.placeholder.com/1200x630/cc0000/ffffff?text=Noticia+365">
+    <meta property="og:image" id="og-image" content="https://via.placeholder.com/1200x630/991b1b/ffffff?text=Noticia+365">
     <meta property="og:url" id="og-url" content="">
     <meta property="og:type" content="article">
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        :root { --primary: #991b1b; --accent: #0f172a; --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --text-meta: #64748b; --border: #e2e8f0; --surface: #ffffff; --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.05); --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.04); --font-ui: 'Plus Jakarta Sans', sans-serif; --font-serif: 'Playfair Display', serif; --nav-height: 70px; }
-        body.dark-mode { --bg: #020617; --card: #0f172a; --text: #f8fafc; --text-meta: #94a3b8; --border: #1e293b; --surface: #0f172a; --primary: #ef4444; --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.5); --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.4); }
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.3s ease; }
-        .app-view { display: none; width: 100%; min-height: 100vh; animation: fadeIn 0.4s ease forwards; }
-        .app-view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .app-header { position: sticky; top: 0; background: rgba(var(--bg), 0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--border); }
-        .app-header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; height: 65px; }
-        .logo { font-family: var(--font-serif); font-weight: 900; font-size: 1.5rem; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: -0.5px; }
-        .logo span { color: var(--primary); }
-        .icon-btn { background: var(--surface); border: 1px solid var(--border); font-size: 1.2rem; color: var(--text); cursor: pointer; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; box-shadow: var(--shadow-card); }
-        .breaking-bar { background: var(--text); color: var(--bg); padding: 5px 20px; font-size: 0.7rem; font-weight: 700; overflow: hidden; white-space: nowrap; text-transform: uppercase; letter-spacing: 1px; }
-        .breaking-text { animation: scrollLeft 30s linear infinite; display: inline-block; padding-left: 100%; }
-        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-        .search-container { max-width: 1200px; margin: 15px auto; padding: 0 15px; }
-        .search-box { position: relative; }
-        .search-box input { width: 100%; padding: 14px 15px 14px 45px; border-radius: 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 1rem; font-family: var(--font-ui); outline: none; font-weight: 500; box-shadow: var(--shadow-card); transition: 0.3s; }
-        .search-box input:focus { border-color: var(--primary); }
-        .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-meta); }
-        .hero-slider { max-width: 1200px; margin: 0 auto 20px; padding: 0 15px; position: relative; }
-        .slider-viewport { overflow: hidden; border-radius: 20px; height: 350px; position: relative; box-shadow: var(--shadow-card); }
-        .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
-        .slide { min-width: 100%; position: relative; cursor: pointer; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-        .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px 20px 25px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); color: white; }
-        .slide-tag { background: var(--primary); color: white; padding: 5px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: inline-block; }
-        .slide-title { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.2; font-weight: 900; }
-        .feed { padding: 0 15px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-        .news-card { background: var(--card); border-radius: 18px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: transform 0.3s, box-shadow 0.3s; animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .news-card:active { transform: scale(0.98); }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        .news-img { width: 100%; height: 200px; object-fit: cover; }
-        .news-body { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
-        .news-tag { color: var(--text); background: var(--bg); padding: 5px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; border: 1px solid var(--border); width: fit-content; }
-        .news-title { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 800; line-height: 1.4; color: var(--text); margin-bottom: 15px; }
-        .news-meta { font-size: 0.8rem; color: var(--text-meta); margin-top: auto; display: flex; align-items: center; font-weight: 600; border-top: 1px solid var(--border); padding-top: 12px; gap: 6px; }
-        
-        #article-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; overflow-y: auto; padding-bottom: 80px; }
-        .article-header { position: sticky; top: 0; background: rgba(var(--bg), 0.95); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; z-index: 100; border-bottom: 1px solid var(--border); }
-        .article-container { max-width: 800px; margin: 0 auto; padding: 25px 20px; background: var(--card); min-height: 100vh; }
-        .article-tag { display: inline-block; background: var(--primary); color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 18px; }
-        .article-title { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 900; line-height: 1.2; margin-bottom: 25px; color: var(--text); }
-        .article-actions-bar { display: flex; justify-content: center; gap: 30px; padding: 15px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 30px; background: var(--surface); border-radius: 12px; }
-        .action-icon { background: none; border: none; color: var(--text-meta); font-size: 1.3rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.75rem; font-family: var(--font-ui); font-weight: 700; transition: 0.2s; }
-        .action-icon.active { color: var(--primary); transform: scale(1.1); }
-        .action-icon i { font-size: 1.5rem; }
-        .article-main-img { width: 100%; border-radius: 16px; margin-bottom: 30px; object-fit: cover; max-height: 400px; box-shadow: var(--shadow-card); }
-        .article-content { font-size: 1.1rem; line-height: 1.8; color: var(--text); }
-        .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; height: auto; }
-        
-        .menu-wrapper { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-        .menu-section { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow-card); }
-        .menu-section h3 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--text); margin-bottom: 20px; border-bottom: 2px solid var(--surface); padding-bottom: 10px; }
-        .menu-text { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
-        .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; font-size: 0.95rem; }
-        .menu-list-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .menu-list-item i.left-icon { width: 30px; color: var(--primary); font-size: 1.2rem; }
-        
-        /* Modais */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px; }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
-        .modal-content { background: var(--card); border-radius: 20px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 30px; box-shadow: var(--shadow-app); position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 1.2rem; }
-        .modal-content h3 { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 15px; color: var(--text); }
-        .modal-content p { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
+        :root { 
+            --primary: #dc2626; /* Vermelho mais vibrante e Premium */
+            --primary-dark: #991b1b;
+            --accent: #0f172a; 
+            --bg: #f8fafc; 
+            --card: #ffffff; 
+            --text: #0f172a; 
+            --text-meta: #64748b; 
+            --text-article: #334155;
+            --border: #e2e8f0; 
+            --surface: #ffffff; 
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            --shadow-nav: 0 -10px 40px rgba(0, 0, 0, 0.06);
+            --font-ui: 'Plus Jakarta Sans', sans-serif; 
+            --font-serif: 'Playfair Display', serif; 
+            --font-reading: 'Lora', serif; /* Fonte de leitura super confortável */
+            --nav-height: 75px; 
+        }
 
-        /* Cookies Banner */
-        .cookie-banner { position: fixed; bottom: calc(var(--nav-height) + 15px); left: 15px; right: 15px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-app); padding: 20px; border-radius: 16px; z-index: 2500; display: none; max-width: 600px; margin: 0 auto; animation: popIn 0.5s forwards; }
-        .cookie-banner p { font-size: 0.85rem; color: var(--text-meta); margin-bottom: 15px; line-height: 1.5; }
-        .cookie-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-family: var(--font-ui); transition: 0.2s; }
+        body.dark-mode { 
+            --bg: #020617; 
+            --card: #0f172a; 
+            --text: #f8fafc; 
+            --text-meta: #94a3b8; 
+            --text-article: #cbd5e1;
+            --border: #1e293b; 
+            --surface: #0f172a; 
+            --primary: #ef4444; 
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+            --shadow-nav: 0 -10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.4s ease, color 0.4s ease; }
         
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(var(--surface), 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-app); padding-bottom: env(safe-area-inset-bottom); transition: 0.3s transform; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-meta); font-size: 0.7rem; font-weight: 700; cursor: pointer; flex: 1; height: 100%; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .nav-item i { font-size: 1.4rem; margin-bottom: 4px; transition: 0.3s; }
-        .nav-item.active { color: var(--primary); transform: translateY(-5px); }
-        .nav-item.active i { transform: scale(1.2); }
-        .scroll-fab { position: fixed; right: 20px; bottom: calc(var(--nav-height) + 20px); width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(153, 27, 27, 0.4); transition: 0.3s; z-index: 1500; }
+        /* Sistema de Animações App-Like */
+        .app-view { display: none; width: 100%; min-height: 100vh; position: absolute; top: 0; left: 0; background: var(--bg); padding-bottom: 100px; }
         
-        .loader { text-align: center; padding: 40px; color: var(--text-meta); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .offline-banner { background: #ef4444; color: white; text-align: center; padding: 10px; font-size: 0.85rem; font-weight: bold; display: none; }
+        /* Fade In suave para a Home e Menus */
+        .app-view.active-fade { display: block; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         
-        @media (min-width: 768px) { .bottom-nav { display: none; } body { padding-bottom: 0; } .scroll-fab { bottom: 30px; } .article-title { font-size: 2.8rem; } .cookie-banner { bottom: 30px; } }
+        /* Slide In Premium para os Artigos (Estilo iOS) */
+        .app-view.active-slide { display: block; animation: slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; z-index: 50; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Top App Bar (Glassmorphism Perfeito) */
+        .app-header { position: sticky; top: 0; background: rgba(var(--bg), 0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); z-index: 1000; border-bottom: 1px solid rgba(var(--border), 0.5); }
+        .app-header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 12px 20px; height: 68px; }
+        .logo { font-family: var(--font-serif); font-weight: 900; font-size: 1.6rem; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary); }
+        .icon-btn { background: var(--card); border: 1px solid var(--border); font-size: 1.2rem; color: var(--text); cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-soft); }
+        .icon-btn:hover { transform: scale(1.05); border-color: var(--primary); color: var(--primary); }
+        .icon-btn:active { transform: scale(0.95); }
+
+        .breaking-bar { background: var(--text); color: var(--bg); padding: 6px 20px; font-size: 0.75rem; font-weight: 700; overflow: hidden; white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; }
+        .breaking-text { animation: scrollLeft 35s linear infinite; display: inline-block; padding-left: 100%; }
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* Barra de Pesquisa Premium */
+        .search-container { max-width: 1200px; margin: 20px auto 10px; padding: 0 20px; }
+        .search-box { position: relative; }
+        .search-box input { width: 100%; padding: 16px 20px 16px 50px; border-radius: 16px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 1.05rem; font-family: var(--font-ui); outline: none; font-weight: 500; box-shadow: var(--shadow-soft); transition: all 0.3s ease; }
+        .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1); }
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-meta); font-size: 1.1rem; }
+
+        /* Slider de Luxo com Efeito Hover Zoom */
+        .hero-slider { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; position: relative; }
+        .slider-viewport { overflow: hidden; border-radius: 24px; height: 380px; position: relative; box-shadow: var(--shadow-soft); transform: translateZ(0); } /* translateZ força aceleração GPU */
+        .slider-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
+        .slide { min-width: 100%; position: relative; cursor: pointer; overflow: hidden; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
+        .slide:hover img { transform: scale(1.08); }
+        .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 80px 30px 30px; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4), transparent); color: white; }
+        .slide-tag { background: var(--primary); color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: inline-block; letter-spacing: 0.5px; }
+        .slide-title { font-family: var(--font-serif); font-size: 1.8rem; line-height: 1.25; font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+        /* Feed em Grelha Profissional */
+        .feed { padding: 0 20px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        
+        /* Card com Efeito Premium de Elevação */
+        .news-card { background: var(--card); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; box-shadow: var(--shadow-soft); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform: translateZ(0); }
+        .news-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: rgba(220, 38, 38, 0.3); }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        
+        .news-img-wrap { overflow: hidden; width: 100%; height: 210px; position: relative; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .news-card:hover .news-img { transform: scale(1.05); }
+        
+        .news-body { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
+        .news-tag { color: var(--primary); background: rgba(220, 38, 38, 0.1); padding: 5px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; border: 1px solid transparent; width: fit-content; }
+        body.dark-mode .news-tag { color: #fca5a5; background: rgba(220, 38, 38, 0.2); }
+        
+        .news-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 800; line-height: 1.4; color: var(--text); margin-bottom: 15px; }
+        .news-meta { font-size: 0.85rem; color: var(--text-meta); margin-top: auto; display: flex; align-items: center; font-weight: 600; border-top: 1px solid var(--border); padding-top: 15px; gap: 8px; }
+
+        /* Leitura Imersiva (Artigo) */
+        .article-header { position: sticky; top: 0; background: rgba(var(--bg), 0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; z-index: 100; border-bottom: 1px solid var(--border); }
+        .article-container { max-width: 800px; margin: 0 auto; padding: 30px 20px; background: var(--bg); min-height: 100vh; }
+        .article-tag { display: inline-block; background: var(--primary); color: white; padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .article-title { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 900; line-height: 1.25; margin-bottom: 30px; color: var(--text); }
+        
+        /* Botões de Ação "Pill" Premium (Nova UI) */
+        .article-actions-bar { display: flex; justify-content: flex-start; gap: 15px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 35px; flex-wrap: wrap; }
+        .btn-premium { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 50px; background: var(--card); color: var(--text); font-weight: 700; font-size: 0.9rem; border: 1px solid var(--border); box-shadow: var(--shadow-soft); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-family: var(--font-ui); }
+        .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); border-color: var(--primary); }
+        .btn-premium.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .btn-premium i { font-size: 1.2rem; }
+        
+        .article-main-img { width: 100%; border-radius: 20px; margin-bottom: 35px; object-fit: cover; max-height: 450px; box-shadow: var(--shadow-soft); }
+        
+        /* Tipografia de Leitura Profissional (Lora) */
+        .article-content { font-family: var(--font-reading); font-size: 1.15rem; line-height: 1.9; color: var(--text-article); }
+        .article-content p { margin-bottom: 1.5em; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 25px 0; height: auto; box-shadow: var(--shadow-soft); }
+        .article-content a { color: var(--primary); text-decoration: underline; text-underline-offset: 4px; font-weight: 500; }
+        
+        /* Secção Relacionados */
+        #related-section { background: var(--card); padding: 40px 20px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-soft); }
+
+        /* Bottom Navigation Floating Style */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(var(--card), 0.9); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-nav); padding-bottom: env(safe-area-inset-bottom); transition: 0.4s transform cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-meta); font-size: 0.7rem; font-weight: 700; cursor: pointer; flex: 1; height: 100%; transition: all 0.3s ease; position: relative; }
+        .nav-item i { font-size: 1.4rem; margin-bottom: 5px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-4px) scale(1.15); }
+        /* Indicador ativo elegante */
+        .nav-item::after { content: ''; position: absolute; bottom: 10px; width: 4px; height: 4px; background: var(--primary); border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
+        .nav-item.active::after { opacity: 1; }
+
+        /* Botão Flutuante (FAB) */
+        .scroll-fab { position: fixed; right: 20px; bottom: calc(var(--nav-height) + 20px); width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1500; }
+        .scroll-fab:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(220, 38, 38, 0.5); }
+        .scroll-fab:active { transform: scale(0.9); }
+        
+        .loader { text-align: center; padding: 50px 20px; color: var(--text-meta); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .offline-banner { background: var(--primary); color: white; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; display: none; letter-spacing: 0.5px; }
+
+        /* Resto dos modais mantidos intactos mas aprimorados */
+        .menu-wrapper { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        .menu-section { background: var(--card); border-radius: 24px; border: 1px solid var(--border); padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-soft); }
+        .menu-section h3 { font-family: var(--font-serif); font-size: 1.5rem; color: var(--text); margin-bottom: 25px; border-bottom: 2px solid var(--bg); padding-bottom: 15px; }
+        .menu-text { font-size: 1rem; line-height: 1.8; color: var(--text-meta); margin-bottom: 15px; }
+        .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        .menu-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .menu-list-item:hover { color: var(--primary); }
+        .menu-list-item i.left-icon { width: 35px; color: var(--primary); font-size: 1.3rem; }
+
+        @media (min-width: 768px) { 
+            .bottom-nav { display: none; } 
+            body { padding-bottom: 0; } 
+            .scroll-fab { bottom: 30px; } 
+            .article-title { font-size: 3rem; } 
+            .app-view { padding-bottom: 50px; }
+        }
     </style>
 </head>
 <body>
 
-<div id="offline-msg" class="offline-banner"><i class="fas fa-wifi"></i> Sem ligação à Internet. A exibir notícias guardadas.</div>
+<div id="offline-msg" class="offline-banner"><i class="fas fa-wifi"></i> Sem ligação. A exibir modo Offline.</div>
 
 <header class="app-header" id="main-header">
     <div class="app-header-inner">
@@ -120,11 +195,11 @@
         <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon-top"></i></button>
     </div>
     <div class="breaking-bar">
-        <div class="breaking-text" id="breaking-ticker">A carregar informações em tempo real...</div>
+        <div class="breaking-text" id="breaking-ticker">A sincronizar com as fontes de Moçambique...</div>
     </div>
 </header>
 
-<div id="home-view" class="app-view active">
+<div id="home-view" class="app-view active-fade">
     <div class="search-container">
         <div class="search-box">
             <i class="fas fa-search"></i>
@@ -139,8 +214,8 @@
 </div>
 
 <div id="lists-view" class="app-view">
-    <div class="search-container" style="padding-top: 10px;">
-        <h2 style="font-family: var(--font-serif); margin-bottom: 15px; color: var(--text);" id="list-title">Ler Mais Tarde</h2>
+    <div class="search-container" style="padding-top: 20px;">
+        <h2 style="font-family: var(--font-serif); margin-bottom: 25px; color: var(--text); font-size: 2rem;" id="list-title">Ler Mais Tarde</h2>
         <main class="feed" id="list-feed" style="padding: 0;"></main>
     </div>
 </div>
@@ -150,16 +225,16 @@
         <div class="menu-section" style="text-align: center;">
             <h3>Clima Local</h3>
             <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-                <iframe src="https://www.meteoblue.com/pt/tempo/widget/daily/?geoloc=detect&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&days=7&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&winddirection=1&uv=0&humidity=0&precipitation=1&precipitationprobability=1&spot=1&pressure=0&layout=light&user_key=4e1a2ed173f1ff7f&embed_key=39a231a5f88f1a1d&sig=ba98331c741ff98161d86ffd1ba35f53e38f4cf043cd1819f9659ee7944bd714" frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; max-width: 378px; height: 371px; border: 0; overflow: hidden; border-radius: 12px; box-shadow: var(--shadow-card);"></iframe>
-                <div style="margin-top: 10px; font-size: 0.75rem;"><a href="https://www.meteoblue.com/pt/tempo/semana/index" target="_blank" rel="noopener" style="color: var(--text-meta); text-decoration: none;">Fornecido por meteoblue</a></div>
+                <iframe src="https://www.meteoblue.com/pt/tempo/widget/daily/?geoloc=detect&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&days=7&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&winddirection=1&uv=0&humidity=0&precipitation=1&precipitationprobability=1&spot=1&pressure=0&layout=light&user_key=4e1a2ed173f1ff7f&embed_key=39a231a5f88f1a1d&sig=ba98331c741ff98161d86ffd1ba35f53e38f4cf043cd1819f9659ee7944bd714" frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; max-width: 378px; height: 371px; border: 0; overflow: hidden; border-radius: 16px; box-shadow: var(--shadow-soft);"></iframe>
+                <div style="margin-top: 15px; font-size: 0.8rem;"><a href="https://www.meteoblue.com/pt/tempo/semana/index" target="_blank" rel="noopener" style="color: var(--text-meta); text-decoration: none;">Fornecido por meteoblue</a></div>
             </div>
         </div>
         <div class="menu-section">
             <h3>Quem Somos & Direitos Autorais</h3>
-            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um web developer e produtor de conteúdos apaixonado pela inovação tecnológica e digital.</p>
+            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um web developer e produtor de conteúdos apaixonado pela inovação digital.</p>
             <p class="menu-text">Com mais de 2 anos de experiência, desenvolveu este Agregador com o objetivo de centralizar a melhor informação de Moçambique num formato de alta performance e acessível a todos.</p>
-            <div style="background: var(--bg); padding: 15px; border-radius: 12px; border-left: 4px solid var(--primary); margin-top: 20px;">
-                <p class="menu-text" style="margin-bottom: 0; font-size: 0.85rem;"><strong>Aviso de Direitos:</strong> Tudo o que é partilhado neste agregador provém de fontes credíveis. Respeitamos os Direitos de Autor dos sites originais. O tráfego e os devidos créditos são sempre direcionados para os autores e portais originais (com ligação direta aos mesmos).</p>
+            <div style="background: rgba(220, 38, 38, 0.05); padding: 20px; border-radius: 16px; border-left: 4px solid var(--primary); margin-top: 25px;">
+                <p class="menu-text" style="margin-bottom: 0; font-size: 0.9rem;"><strong>Aviso de Direitos:</strong> Tudo o que é partilhado neste agregador provém de fontes credíveis. Respeitamos os Direitos de Autor dos sites originais. O tráfego e os devidos créditos são sempre direcionados para os autores e portais originais.</p>
             </div>
         </div>
         <div class="menu-section">
@@ -170,10 +245,6 @@
             </div>
             <div class="menu-list-item" onclick="openModal('modal-privacidade')">
                 <div><i class="fas fa-user-shield left-icon"></i> Política de Privacidade</div>
-                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
-            </div>
-            <div class="menu-list-item" onclick="openModal('modal-cookies')">
-                <div><i class="fas fa-cookie-bite left-icon"></i> Política de Cookies</div>
                 <i class="fas fa-chevron-right" style="color: var(--border);"></i>
             </div>
         </div>
@@ -188,15 +259,19 @@
     <main class="article-container">
         <div id="source-tag" class="article-tag">...</div>
         <h1 id="article-title" class="article-title">...</h1>
+        
         <div class="article-actions-bar">
-            <button class="action-icon" id="btn-like" onclick="toggleLike()"><i class="fas fa-heart"></i> Favorito</button>
-            <button class="action-icon" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark"></i> Guardar</button>
-            <button class="action-icon" id="btn-original"><i class="fas fa-external-link-alt"></i> Visitar Site</button>
+            <button class="btn-premium" id="btn-like" onclick="toggleLike()"><i class="fas fa-heart"></i> Adorar</button>
+            <button class="btn-premium" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark"></i> Guardar</button>
+            <button class="btn-premium" id="btn-original"><i class="fas fa-external-link-alt"></i> Visitar Site Oficial</button>
         </div>
+
         <img id="feat-img" class="article-main-img" src="" style="display:none">
+        
         <div id="article-content" class="article-content"></div>
-        <div style="margin-top: 50px; border-top: 2px solid var(--border); padding-top: 30px;" id="related-section">
-            <h3 style="font-family: var(--font-serif); margin-bottom: 20px; font-size: 1.8rem;">Continue a Ler</h3>
+        
+        <div id="related-section" style="margin-top: 60px;">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 25px; font-size: 2rem; color: var(--text);">Continue a Ler</h3>
             <div class="feed" id="related-grid" style="padding: 0;"></div>
         </div>
     </main>
@@ -216,22 +291,23 @@
 
 <button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()"><i class="fas fa-arrow-down"></i></button>
 
-<div class="cookie-banner" id="cookie-banner">
-    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
-        <i class="fas fa-cookie-bite" style="font-size: 2rem; color: var(--primary);"></i>
-        <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--text);">Utilizamos Cookies</h4>
-    </div>
-    <p>Este agregador utiliza cookies para melhorar a sua experiência e guardar as suas preferências. Ao continuar a navegar, concorda com a nossa Política.</p>
-    <button class="cookie-btn" onclick="acceptCookies()">Aceitar e Fechar</button>
-</div>
+<style>
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 20px; }
+    .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+    .modal-content { background: var(--card); border-radius: 24px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: var(--bg); border: none; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 1.2rem; transition: 0.3s; }
+    .modal-close:hover { background: var(--primary); color: white; }
+    .modal-content h3 { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 20px; color: var(--text); }
+    .modal-content p { font-size: 1.05rem; line-height: 1.8; color: var(--text-meta); margin-bottom: 15px; }
+</style>
 
 <div class="modal-overlay" id="modal-contactos" onclick="closeModal(event, 'modal-contactos')">
     <div class="modal-content">
         <button class="modal-close" onclick="forceClose('modal-contactos')"><i class="fas fa-times"></i></button>
         <h3>Contactos</h3>
         <p>Desenvolvido por Donaldo F. Rodrigues (DOFERO):</p>
-        <p><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.2rem; margin-right:8px;"></i> <strong>WhatsApp / Telefone:</strong><br> +258 85 908 5157 <br> +258 83 416 9259</p>
-        <p><i class="fas fa-envelope" style="color:var(--primary); font-size:1.2rem; margin-right:8px;"></i> <strong>Email:</strong><br> donald.bj.bj@gmail.com</p>
+        <p><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.3rem; margin-right:10px;"></i> <strong>WhatsApp / Telefone:</strong><br> +258 85 908 5157 <br> +258 83 416 9259</p>
+        <p><i class="fas fa-envelope" style="color:var(--primary); font-size:1.3rem; margin-right:10px;"></i> <strong>Email:</strong><br> donald.bj.bj@gmail.com</p>
     </div>
 </div>
 
@@ -240,25 +316,17 @@
         <button class="modal-close" onclick="forceClose('modal-privacidade')"><i class="fas fa-times"></i></button>
         <h3>Política de Privacidade</h3>
         <p>A proteção dos seus dados é prioritária. Não recolhemos dados sensíveis. O agregador funciona guardando as suas preferências localmente no seu dispositivo.</p>
-        <p>A política de privacidade das imagens e dos conteúdos jornalísticos integrais aplica-se aos sites originais.</p>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modal-cookies" onclick="closeModal(event, 'modal-cookies')">
-    <div class="modal-content">
-        <button class="modal-close" onclick="forceClose('modal-cookies')"><i class="fas fa-times"></i></button>
-        <h3>Política de Cookies</h3>
-        <p>Utilizamos cookies essenciais para garantir que a aplicação web funcione corretamente (como o Modo Escuro, artigos Favoritos e funcionamento Offline).</p>
+        <p>A política de privacidade das imagens e dos conteúdos jornalísticos aplica-se aos sites originais.</p>
     </div>
 </div>
 
 <script>
-// PWA Registration (Opcional - mas pronto se colocar o sw.js)
+// PWA Registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(err => console.log('Sem SW')); });
 }
 
-// TODAS AS 26 FONTES ORIGINAIS (AGORA COMPLETAS)
+// TODAS AS 26 FONTES
 const SOURCES = [
     { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
     { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
@@ -299,6 +367,7 @@ function extractImage(p) {
 }
 
 function timeAgo(dateString) {
+    if(!dateString) return "Recente";
     const pubDate = new Date(dateString);
     const diffInSeconds = Math.floor((new Date() - pubDate) / 1000);
     if (diffInSeconds < 60) return `${Math.floor(diffInSeconds)} seg atrás`;
@@ -365,7 +434,7 @@ function renderFeed() {
         if(!card) {
             card = document.createElement('div'); card.id = `card-${p.id}`; card.className = 'news-card';
             card.onclick = () => openArticle(p.id);
-            card.innerHTML = `<img class="news-img" src="${p.img}" loading="lazy"><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3><div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div></div>`;
+            card.innerHTML = `<div class="news-img-wrap"><img class="news-img" src="${p.img}" loading="lazy"></div><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3><div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div></div>`;
             feed.appendChild(card);
         } else {
             const timeBadge = card.querySelector('.time-badge');
@@ -383,7 +452,7 @@ function buildSlider() {
     track.innerHTML = top10.map(p => `<div class="slide" onclick="openArticle('${p.id}')"><img src="${p.img}"><div class="slide-content"><span class="slide-tag">${p.source}</span><h2 class="slide-title">${p.title}</h2></div></div>`).join('');
     clearInterval(sliderInterval);
     let idx = 0;
-    sliderInterval = setInterval(() => { idx = (idx + 1) % top10.length; track.style.transform = `translateX(-${idx * 100}%)`; }, 4000);
+    sliderInterval = setInterval(() => { idx = (idx + 1) % top10.length; track.style.transform = `translateX(-${idx * 100}%)`; }, 5000);
 }
 
 function updateTicker() {
@@ -408,7 +477,7 @@ function openArticle(id, isHistoryPop = false) {
     let post = allPosts.find(p => p.id === id) || JSON.parse(localStorage.getItem('offline_cache_365')||'[]').find(p => p.id===id);
     if(!post) return;
 
-    if (!document.getElementById('article-view').classList.contains('active')) homeScrollPos = window.scrollY;
+    if (!document.getElementById('article-view').classList.contains('active-slide')) homeScrollPos = window.scrollY;
     currentReadingPost = post;
 
     if (!isHistoryPop) history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
@@ -425,9 +494,12 @@ function openArticle(id, isHistoryPop = false) {
     updateActionBtns();
     
     const grid = document.getElementById('related-grid');
-    grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `<div class="news-card" onclick="openArticle('${r.id}')" style="box-shadow:none;"><img class="news-img" src="${r.img}" style="height:140px;"><div class="news-body"><h4 class="news-title" style="font-size:1rem; margin-bottom:5px;">${r.title}</h4></div></div>`).join('');
+    grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `<div class="news-card" onclick="openArticle('${r.id}')" style="box-shadow:none; border-color:var(--bg);"><div class="news-img-wrap" style="height:140px;"><img class="news-img" src="${r.img}"></div><div class="news-body"><h4 class="news-title" style="font-size:1.1rem; margin-bottom:5px;">${r.title}</h4></div></div>`).join('');
 
-    document.getElementById('article-view').classList.add('active');
+    // Adiciona classe de animação premium (Desliza da Direita)
+    document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
+    document.getElementById('article-view').classList.add('active-slide');
+    
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
     document.getElementById('scroll-fab').style.display = 'none'; 
     document.getElementById('article-view').scrollTo(0,0);
@@ -437,7 +509,9 @@ function goBackHistory() { window.history.back(); }
 
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.view === 'article') { openArticle(e.state.id, true); } else {
-        document.getElementById('article-view').classList.remove('active');
+        document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
+        document.getElementById('home-view').classList.add('active-fade');
+        
         document.getElementById('bottom-nav').style.transform = 'translateY(0)';
         document.getElementById('scroll-fab').style.display = 'flex';
         currentReadingPost = null;
@@ -448,18 +522,18 @@ window.addEventListener('popstate', (e) => {
 
 function switchTab(tabId, element = null) {
     if(element) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
-    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.app-view').forEach(v => { v.classList.remove('active-fade'); v.classList.remove('active-slide'); });
     
     if(tabId === 'home') {
-        document.getElementById('home-view').classList.add('active'); document.getElementById('main-header').style.display = 'block';
+        document.getElementById('home-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'block';
     } else if (tabId === 'saved') {
-        document.getElementById('lists-view').classList.add('active'); document.getElementById('main-header').style.display = 'none';
+        document.getElementById('lists-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'none';
         const list = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
         const feed = document.getElementById('list-feed');
         feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px;">A lista está vazia.</p>' : '';
-        list.forEach(p => feed.innerHTML += `<div class="news-card" onclick="openArticle('${p.id}')"><img class="news-img" src="${p.img}"><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div></div>`);
+        list.forEach(p => feed.innerHTML += `<div class="news-card" onclick="openArticle('${p.id}')"><div class="news-img-wrap"><img class="news-img" src="${p.img}"></div><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div></div>`);
     } else if (tabId === 'menu') {
-        document.getElementById('menu-view').classList.add('active'); document.getElementById('main-header').style.display = 'none';
+        document.getElementById('menu-view').classList.add('active-fade'); document.getElementById('main-header').style.display = 'none';
     }
     window.scrollTo(0,0);
 }
@@ -486,6 +560,9 @@ function updateActionBtns() {
     const isLiked = JSON.parse(localStorage.getItem('news_liked_365') || '[]').some(x => x.id === currentReadingPost.id);
     document.getElementById('btn-save').classList.toggle('active', isSaved);
     document.getElementById('btn-like').classList.toggle('active', isLiked);
+    
+    document.getElementById('btn-save').innerHTML = isSaved ? '<i class="fas fa-bookmark"></i> Guardado' : '<i class="far fa-bookmark"></i> Guardar';
+    document.getElementById('btn-like').innerHTML = isLiked ? '<i class="fas fa-heart"></i> Adorado' : '<i class="far fa-heart"></i> Adorar';
 }
 
 function localInstantSearch() {
@@ -498,14 +575,14 @@ function localInstantSearch() {
 function toggleTheme() {
     const isDark = document.body.classList.toggle('dark-mode');
     document.getElementById('theme-icon-top').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#f8fafc");
+    document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#ffffff");
 }
 
 function shareGlobal() {
     if(!currentReadingPost) return;
     const url = window.location.href;
     const text = `🔴 *${currentReadingPost.title}*\n\nFonte: _${currentReadingPost.source}_\n\nLeia a reportagem completa aqui: ${url}`;
-    if(navigator.share) { navigator.share({ title: currentReadingPost.title, text: `🔴 Leia no Notícia 365: ${currentReadingPost.title}`, url: url }).catch(e => console.log(e)); } 
+    if(navigator.share) { navigator.share({ title: currentReadingPost.title, text: `Leia no Notícia 365: ${currentReadingPost.title}`, url: url }).catch(e => console.log(e)); } 
     else { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`); }
 }
 
@@ -524,11 +601,6 @@ function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(event, id) { if (event.target.id === id) document.getElementById(id).classList.remove('active'); }
 function forceClose(id) { document.getElementById(id).classList.remove('active'); }
 
-function acceptCookies() {
-    localStorage.setItem('cookies_aceites_365', 'sim');
-    document.getElementById('cookie-banner').style.display = 'none';
-}
-
 let adLoaded = false;
 window.addEventListener('scroll', () => {
     if(!adLoaded && window.scrollY > 300) {
@@ -541,8 +613,6 @@ window.addEventListener('scroll', () => {
 }, {passive: true});
 
 window.onload = () => {
-    if(!localStorage.getItem('cookies_aceites_365')) setTimeout(() => { document.getElementById('cookie-banner').style.display = 'block'; }, 1500);
-
     history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
     const params = new URLSearchParams(window.location.search);
     if(params.get('noticia')) {
@@ -558,28 +628,11 @@ window.onload = () => {
             });
         }
     }
-    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "400px"});
+    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "500px"});
     obs.observe(document.getElementById('scroll-anchor'));
     loadNewsProgressive();
 };
 </script>
 
-<script data-cfasync="false" type="text/javascript" id="clever-core">
-/* <![CDATA[ */
-    (function (document, window) {
-        var a, c = document.createElement("script"), f = window.frameElement;
-        c.id = "CleverCoreLoader101444";
-        c.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
-        c.async = !0;
-        c.type = "text/javascript";
-        c.setAttribute("data-target", window.name || (f && f.getAttribute("id")));
-        c.setAttribute("data-callback", "put-your-callback-function-here");
-        c.setAttribute("data-callback-url-click", "put-your-click-macro-here");
-        c.setAttribute("data-callback-url-view", "put-your-view-macro-here");
-        try { a = parent.document.getElementsByTagName("script")[0] || document.getElementsByTagName("script")[0]; } catch(e) { a = document.getElementsByTagName("script")[0]; }
-        a.parentNode.insertBefore(c, a);
-    })(document, window);
-/* ]]> */
-</script>
 </body>
 </html>
