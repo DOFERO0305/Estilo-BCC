@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Open África Portal | Excelência em Informação</title>
+
+    <meta id="og-title" property="og:title" content="Open África Portal">
+    <meta id="og-image" property="og:image" content="https://via.placeholder.com/1200x630/111827/ffffff?text=Open+Africa+Portal">
+    <meta id="og-url" property="og:url" content="">
+    <meta property="og:description" content="O portal de notícias mais avançado do continente.">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Paleta Premium Global */
+            --primary: #0f172a; 
+            --primary-light: #1e293b;
+            --accent: #b91c1c; /* Vermelho Jornalístico */
+            --accent-hover: #991b1b;
+            
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --surface: #f1f5f9;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            
+            --font-ui: 'Inter', sans-serif;
+            --font-serif: 'Merriweather', serif;
+        }
+
+        body.dark-mode {
+            --primary: #ffffff;
+            --primary-light: #f8fafc;
+            --bg: #0b0f19;
+            --card: #111827;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #1f2937;
+            --surface: #1f2937;
+            --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text-main); line-height: 1.6; transition: background 0.3s, color 0.3s; scroll-behavior: smooth; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* Animações Fluídas */
+        .fade-in { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* HEADER EDITORIAL */
+        .site-header { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-sm); transition: 0.3s; }
+        .top-bar { background: var(--primary); color: white; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 6px 20px; display: flex; justify-content: space-between; align-items: center; letter-spacing: 1px; }
+        .ticker-wrap { flex-grow: 1; overflow: hidden; margin-right: 20px; white-space: nowrap; }
+        .ticker-move { display: inline-block; animation: ticker 40s linear infinite; padding-left: 100%; }
+        @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        
+        .main-nav { max-width: 1400px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .menu-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; }
+        
+        .logo { font-family: var(--font-serif); font-weight: 900; font-size: 2.2rem; color: var(--text-main); text-decoration: none; letter-spacing: -1px; cursor: pointer; }
+        .logo span { color: var(--accent); }
+        
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .icon-btn:hover { border-color: var(--text-main); }
+
+        /* NAVEGAÇÃO DE CATEGORIAS (DESKTOP) */
+        .cat-nav { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; gap: 30px; overflow-x: auto; border-top: 1px solid var(--border); scrollbar-width: none; }
+        .cat-nav::-webkit-scrollbar { display: none; }
+        .cat-link { padding: 15px 0; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); cursor: pointer; white-space: nowrap; position: relative; }
+        .cat-link:hover, .cat-link.active { color: var(--accent); }
+        .cat-link.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px; background: var(--accent); }
+
+        /* PESQUISA */
+        .search-container { max-width: 1400px; margin: 20px auto 0; padding: 0 20px; }
+        .search-box { position: relative; max-width: 600px; margin: 0 auto; }
+        .search-box input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 30px; border: 1px solid var(--border); background: var(--card); color: var(--text-main); font-family: var(--font-ui); font-size: 1rem; outline: none; transition: 0.3s; box-shadow: var(--shadow-sm); }
+        .search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1); }
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+        /* GRELHA EDITORIAL (A MÁGICA DO CSS) */
+        .feed-container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
+        .feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        .news-card { display: flex; flex-direction: column; cursor: pointer; transition: 0.3s; position: relative; }
+        .news-card:hover .news-img-wrap img { transform: scale(1.05); }
+        .news-card:hover .news-title { color: var(--accent); }
+        
+        .news-img-wrap { width: 100%; aspect-ratio: 16/10; overflow: hidden; background: var(--surface); margin-bottom: 15px; position: relative; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        
+        .news-source-tag { position: absolute; bottom: 10px; left: 10px; background: var(--primary); color: white; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 4px 8px; letter-spacing: 1px; }
+        
+        .news-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 500;}
+        .news-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; line-height: 1.3; color: var(--text-main); margin-bottom: 10px; transition: color 0.2s; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* FEATURED HERO ARTICLE (O primeiro artigo destaca-se automaticamente em Desktop) */
+        @media (min-width: 1024px) {
+            .feed .news-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 10px; }
+            .feed .news-card:first-child .news-img-wrap { aspect-ratio: 16/9; margin-bottom: 0; }
+            .feed .news-card:first-child .news-title { font-size: 2.5rem; line-height: 1.2; -webkit-line-clamp: 4; }
+            .feed .news-card:first-child .news-source-tag { font-size: 0.8rem; padding: 6px 12px; }
+            .feed .news-card:first-child .news-meta { font-size: 0.9rem; margin-bottom: 15px; }
+        }
+
+        /* VISTA DO ARTIGO (READING MODE) */
+        #article-view { display: none; background: var(--card); min-height: 100vh; }
+        .article-hero { width: 100%; height: 50vh; min-height: 400px; max-height: 600px; position: relative; background: var(--primary); }
+        .article-hero img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        
+        .article-header-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 60px 20px 30px; color: white; }
+        .article-header-content { max-width: 800px; margin: 0 auto; }
+        
+        .art-tag { background: var(--accent); color: white; display: inline-block; padding: 5px 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+        .art-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; }
+        
+        .article-body { max-width: 800px; margin: -40px auto 50px; position: relative; background: var(--card); padding: 40px; border-radius: 8px 8px 0 0; box-shadow: var(--shadow-lg); font-size: 1.15rem; line-height: 1.8; color: var(--text-main); font-family: var(--font-ui); }
+        .article-body p { margin-bottom: 1.5rem; }
+        .article-body img { max-width: 100%; height: auto; border-radius: 4px; margin: 2rem 0; }
+        .article-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); transition: 0.2s; }
+        .article-body a:hover { background: rgba(185, 28, 28, 0.1); }
+        
+        .tools-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
+        .tools-left { display: flex; gap: 15px; }
+        .tool-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); padding: 10px 20px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; border-radius: 4px; }
+        .tool-btn:hover { background: var(--border); }
+        .tool-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(185, 28, 28, 0.05); }
+
+        .btn-read-full { display: block; text-align: center; background: var(--primary); color: white; font-weight: 700; text-transform: uppercase; padding: 18px; letter-spacing: 1px; text-decoration: none; border: none; transition: 0.3s; margin-top: 40px; border-radius: 4px; }
+        .btn-read-full:hover { background: var(--accent); color: white; }
+
+        /* SIDEBAR / OFFCANVAS */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px); }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        .sidebar { position: fixed; top: 0; left: -350px; width: 320px; height: 100vh; background: var(--card); z-index: 2000; transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow-y: auto; }
+        .sidebar.open { left: 0; }
+        
+        .side-header { padding: 25px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .side-header h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 900; }
+        .btn-close { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
+        .btn-close:hover { color: var(--accent); transform: rotate(90deg); }
+        
+        .side-menu { padding: 20px 0; }
+        .side-item { display: flex; align-items: center; gap: 15px; padding: 15px 25px; color: var(--text-main); text-decoration: none; font-weight: 600; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
+        .side-item:hover, .side-item.active { background: var(--surface); border-left-color: var(--accent); color: var(--accent); }
+        .side-item i { font-size: 1.1rem; width: 24px; text-align: center; }
+        .badge { margin-left: auto; background: var(--text-main); color: var(--card); font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
+
+        /* OUTRAS CÓDIGOS DE SUPORTE */
+        .loader-main { text-align: center; padding: 50px; grid-column: 1/-1; color: var(--text-muted); font-size: 1.1rem; font-weight: 500; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .floating-action { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-md); transition: 0.3s; z-index: 100; border: none;}
+        .floating-action:hover { transform: translateY(-5px); background: var(--accent); }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.6rem; }
+            .cat-nav { display: none; }
+            .article-hero { height: 40vh; }
+            .article-body { padding: 25px 20px; margin-top: -20px; font-size: 1.05rem; }
+            .art-title { font-size: 1.8rem; }
+            .tools-left { flex-direction: column; width: 100%; }
+            .tool-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+    <div class="side-header">
+        <h2>Open África</h2>
+        <button class="btn-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="side-menu">
+        <div class="side-item active" onclick="goHomeForce()"><i class="fas fa-newspaper"></i> Últimas Notícias</div>
+        <div class="side-item" id="nav-saved" onclick="toggleSavedView()"><i class="fas fa-bookmark"></i> Leitura <span class="badge" id="badge-saved">0</span></div>
+        <div class="side-item" id="nav-liked" onclick="toggleLikedView()"><i class="fas fa-heart"></i> Favoritos <span class="badge" id="badge-liked">0</span></div>
+        <div style="padding: 20px 25px; margin-top: 20px; border-top: 1px solid var(--border);">
+            <p style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 10px;">Ordenação</p>
+            <div class="side-item" style="padding: 10px 0;" onclick="setSort('new')"><i class="fas fa-sort-amount-down"></i> Mais Recentes</div>
+            <div class="side-item" style="padding: 10px 0;" onclick="setSort('old')"><i class="fas fa-sort-amount-up"></i> Mais Antigas</div>
+        </div>
+    </div>
+</aside>
+
+<div id="home-view">
+    <header class="site-header">
+        <div class="top-bar">
+            <span style="color: var(--accent); font-weight: 800;">BREAKING</span>
+            <div class="ticker-wrap"><div class="ticker-move" id="breaking-ticker">A carregar informações em tempo real...</div></div>
+            <span id="current-date"></span>
+        </div>
+        <div class="main-nav">
+            <div class="nav-left">
+                <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <a class="logo" onclick="goHomeForce()">Open<span>África</span></a>
+            </div>
+            <div class="nav-right">
+                <button class="icon-btn" onclick="manualRefresh()" title="Atualizar"><i class="fas fa-sync-alt" id="refresh-icon"></i></button>
+                <button class="icon-btn" onclick="toggleTheme()" title="Modo Noturno"><i class="fas fa-moon" id="theme-icon"></i></button>
+            </div>
+        </div>
+        <div class="cat-nav">
+            <div class="cat-link active" onclick="filterCat('', this)">Todas as Notícias</div>
+            <div class="cat-link" onclick="filterCat('Política', this)">Política & Poder</div>
+            <div class="cat-link" onclick="filterCat('Economia', this)">Mercados & Economia</div>
+            <div class="cat-link" onclick="filterCat('Sociedade', this)">Sociedade</div>
+            <div class="cat-link" onclick="filterCat('Desporto', this)">Desporto</div>
+            <div class="cat-link" onclick="filterCat('Mundo', this)">Internacional</div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Pesquisar manchetes, tópicos ou empresas..." oninput="localInstantSearch()">
+        </div>
+    </div>
+
+    <main class="feed-container">
+        <div class="feed" id="feed"></div>
+        <div id="scroll-anchor" class="loader-main"><i class="fas fa-circle-notch fa-spin"></i> A atualizar o feed editorial...</div>
+    </main>
+</div>
+
+<div id="article-view">
+    <button class="floating-action" onclick="goHomeForce()" style="bottom: auto; top: 20px; right: 20px; z-index: 1000; background: rgba(0,0,0,0.5); color: white; backdrop-filter: blur(5px);"><i class="fas fa-times"></i></button>
+    
+    <div class="article-hero">
+        <img id="feat-img" src="" alt="">
+        <div class="article-header-overlay">
+            <div class="article-header-content">
+                <span id="source-tag" class="art-tag">...</span>
+                <h1 id="article-title" class="art-title">...</h1>
+                <div style="font-family: var(--font-ui); font-size: 0.9rem; font-weight: 500; opacity: 0.8;" id="article-date"></div>
+            </div>
+        </div>
+    </div>
+
+    <article class="article-body slide-up-fade">
+        <div class="tools-bar">
+            <div class="tools-left">
+                <button id="btn-save" class="tool-btn" onclick="toggleSaveArticle()"><i class="fas fa-bookmark"></i> Guardar para depois</button>
+                <button id="btn-like" class="tool-btn" onclick="toggleLike()"><i class="fas fa-heart"></i> Gostei</button>
+            </div>
+            <button class="tool-btn" onclick="shareGlobal()" style="border: none; background: transparent; padding: 0;"><i class="fas fa-share-nodes"></i> Partilhar</button>
+        </div>
+        
+        <div id="article-content"></div>
+        <a id="original-link" href="#" target="_blank" class="btn-read-full">Ler Reportagem Completa</a>
+    </article>
+</div>
+
+<script>
+// Mantivemos a lista de fontes original e adicionamos algumas genéricas que usam WP API para simular a escala de África.
+const SOURCES = [
+    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
+    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
+    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts?_embed", slug: "mznews" },
+    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts?_embed", slug: "folha" },
+    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts?_embed", slug: "evidencias" },
+    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts?_embed", slug: "integrity" },
+    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts?_embed", slug: "savana" },
+    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts?_embed", slug: "aim" },
+    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?_embed", slug: "noticias" },
+    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts?_embed", slug: "diario" },
+    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts?_embed", slug: "timesdetodos" }
+];
+
+document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-MZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+let allPosts = [], currentPage = 1, isFetching = false, currentCat = '';
+let isSavedView = false, isLikedView = false, sortOrder = 'new';
+let currentReadingPost = null, savedScrollPosition = 0;
+
+function detectCategory(title, content) {
+    const text = (title + " " + (content || "")).toLowerCase();
+    if (text.match(/filipe nyusi|governo|frelimo|renamo|mddm|política|eleições|parlamento|ministro|presidente/)) return 'Política';
+    if (text.match(/banco|metical|dólar|inflação|economia|mercado|empresas|investimento|finanças|impostos/)) return 'Economia';
+    if (text.match(/futebol|mambas|desporto|campeonato|bola|golo|selecção|atleta|moçambola/)) return 'Desporto';
+    if (text.match(/internacional|mundo|eua|ucrânia|rússia|gaza|onu|biden|putin|senegal|áfrica do sul/)) return 'Mundo';
+    if (text.match(/polícia|saúde|educação|crime|sociedade|acidente|hospital|escola|sermnic|pram/)) return 'Sociedade';
+    return 'Geral'; 
+}
+
+function extractDeepImage(p) {
+    if (p._embedded && p._embedded['wp:featuredmedia'] && p._embedded['wp:featuredmedia'][0].source_url) return p._embedded['wp:featuredmedia'][0].source_url;
+    if (p.jetpack_featured_media_url) return p.jetpack_featured_media_url;
+    if (p.yoast_head_json && p.yoast_head_json.og_image && p.yoast_head_json.og_image[0].url) return p.yoast_head_json.og_image[0].url;
+    if (p.content && p.content.rendered) {
+        const match = p.content.rendered.match(/<img[^>]+src="([^">]+)"/);
+        if (match) return match[1];
+    }
+    return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Open+Africa+News';
+}
+
+function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return "Agora mesmo";
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} min atrás`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return "Ontem";
+    if (diffInDays < 7) return `${diffInDays} dias atrás`;
+    return date.toLocaleDateString('pt-MZ');
+}
+
+function updateBadges() {
+    document.getElementById('badge-saved').innerText = JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]').length;
+    document.getElementById('badge-liked').innerText = JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]').length;
+}
+
+window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.view === 'article') {
+        const post = allPosts.find(p => p.uniqueId === e.state.articleId) || JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]').find(p => p.uniqueId === e.state.articleId) || JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]').find(p => p.uniqueId === e.state.articleId);
+        if (post) openArticleView(post, false); 
+    } else { 
+        closeArticleView(false); 
+    }
+});
+
+function goHomeForce() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('search-input').value = '';
+    
+    history.pushState({ view: 'home' }, "", window.location.pathname);
+    closeArticleView(false);
+    window.scrollTo({top:0, behavior: 'smooth'});
+    renderFeed(); 
+}
+
+function toggleSidebar() { 
+    document.getElementById('sidebar').classList.toggle('open'); 
+    document.getElementById('overlay').classList.toggle('active'); 
+}
+
+function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+function setSort(order) {
+    sortOrder = order;
+    toggleSidebar(); renderFeed(); 
+}
+
+function manualRefresh() {
+    const icon = document.getElementById('refresh-icon');
+    icon.classList.add('fa-spin');
+    document.getElementById('search-input').value = ''; 
+    document.getElementById('feed').innerHTML = ''; 
+    allPosts = []; currentPage = 1; 
+    window.scrollTo({top:0, behavior: 'smooth'}); 
+    loadNews().then(() => { setTimeout(() => icon.classList.remove('fa-spin'), 1000); });
+}
+
+function localInstantSearch() {
+    const query = document.getElementById('search-input').value.toLowerCase();
+    const feed = document.getElementById('feed');
+    Array.from(feed.children).forEach(card => {
+        const title = card.querySelector('.news-title').innerText.toLowerCase();
+        const src = card.querySelector('.news-source-tag').innerText.toLowerCase();
+        if (title.includes(query) || src.includes(query)) { 
+            card.style.display = 'flex'; 
+        } else { 
+            card.style.display = 'none'; 
+        }
+    });
+}
+
+async function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 8000 } = options;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const response = await fetch(resource, { ...options, signal: controller.signal });
+    clearTimeout(id); return response;
+}
+
+async function loadNews() {
+    if (isFetching) return;
+    if (isSavedView || isLikedView) { renderFeed(); return; } 
+    
+    isFetching = true;
+    let fetchesCompleted = 0;
+    const cacheBuster = new Date().getTime();
+
+    SOURCES.forEach(async (src) => {
+        try {
+            let url = `${src.api}&per_page=6&page=${currentPage}&_cb=${cacheBuster}`;
+            const res = await fetchWithTimeout(url);
+            if (!res.ok) throw new Error('Bloqueio');
+            const data = await res.json();
+            
+            let added = false;
+            data.forEach(p => {
+                const uniqueId = `${src.slug}-${p.id}`;
+                if(!allPosts.some(oldP => oldP.uniqueId === uniqueId)) { 
+                    const pubDate = p.date_gmt ? (p.date_gmt + 'Z') : p.date;
+                    allPosts.push({
+                        uniqueId: uniqueId, apiId: p.id, title: p.title.rendered, date: pubDate, srcName: src.name, srcSlug: src.slug, apiBase: src.api.split('?')[0], link: p.link, img: extractDeepImage(p), contentLoaded: p.content?.rendered || "", detectedCat: detectCategory(p.title.rendered, p.content?.rendered || "") 
+                    });
+                    added = true;
+                }
+            });
+            
+            if (added) { 
+                if (!currentReadingPost) { renderFeed(); } 
+                updateTicker(); 
+            }
+        } catch (e) { } 
+        finally {
+            fetchesCompleted++;
+            if(fetchesCompleted === SOURCES.length) { isFetching = false; currentPage++; }
+        }
+    });
+}
+
+function updateTicker() {
+    if(allPosts.length > 0) {
+        let tempPosts = [...allPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+        document.getElementById('breaking-ticker').innerHTML = tempPosts.slice(0, 6).map(p => `<span style="opacity:0.5; margin-right:8px;">${p.srcName}</span> ${p.title}`).join(" &nbsp; • &nbsp; ");
+    }
+}
+
+/* O Sistema original de renderização foi mantido, pois foi otimizado para não piscar.
+   O truque de UI (Featured Article) acontece puramente no CSS (.news-card:first-child) */
+function renderFeed() {
+    const feed = document.getElementById('feed');
+    let displayList = [...allPosts];
+    
+    if(isSavedView) { displayList = JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]'); }
+    else if(isLikedView) { displayList = JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]'); }
+    
+    if(currentCat && !isSavedView && !isLikedView) { displayList = displayList.filter(p => p.detectedCat === currentCat); }
+    
+    if(sortOrder === 'new') { 
+        displayList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
+    } else { 
+        displayList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); 
+    }
+    
+    displayList.forEach((p, index) => {
+        let card = document.getElementById(`card-${p.uniqueId}`);
+        if (!card) {
+            card = document.createElement('div');
+            card.id = `card-${p.uniqueId}`;
+            card.className = 'news-card fade-in';
+            card.onclick = () => openArticleById(p.uniqueId);
+            card.innerHTML = `
+                <div class="news-img-wrap">
+                    <img class="news-img" src="${p.img}" loading="lazy">
+                    <div class="news-source-tag">${p.srcName}</div>
+                </div>
+                <div class="news-body">
+                    <div class="news-meta"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div>
+                    <h3 class="news-title">${p.title}</h3>
+                </div>`;
+        }
+        
+        if (feed.children[index] !== card) {
+            feed.insertBefore(card, feed.children[index] || null);
+        }
+        card.style.display = 'flex';
+    });
+
+    Array.from(feed.children).forEach(child => {
+        const id = child.id.replace('card-', '');
+        if(!displayList.some(p => p.uniqueId === id)) { child.style.display = 'none'; }
+    });
+    
+    localInstantSearch(); 
+}
+
+function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-link').forEach(i => i.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = cat; 
+    isSavedView = false; isLikedView = false;
+    document.getElementById('scroll-anchor').style.display = 'block';
+    renderFeed();
+}
+
+function toggleSavedView() {
+    isSavedView = !isSavedView; isLikedView = false;
+    document.getElementById('scroll-anchor').style.display = isSavedView ? 'none' : 'block';
+    toggleSidebar();
+    if(isSavedView && currentReadingPost) { goHomeForce(); } else { renderFeed(); }
+}
+
+function toggleLikedView() {
+    isLikedView = !isLikedView; isSavedView = false;
+    document.getElementById('scroll-anchor').style.display = isLikedView ? 'none' : 'block';
+    toggleSidebar();
+    if(isLikedView && currentReadingPost) { goHomeForce(); } else { renderFeed(); }
+}
+
+function openArticleById(id) {
+    let post = allPosts.find(p => p.uniqueId === id) || JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]').find(p => p.uniqueId === id) || JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]').find(p => p.uniqueId === id);
+    if(post) {
+        if(!currentReadingPost) { savedScrollPosition = window.scrollY; }
+        openArticleView(post, true);
+    }
+}
+
+async function openArticleView(post, pushHistory = true) {
+    currentReadingPost = post;
+    const shareUrl = window.location.origin + window.location.pathname + "?article=" + post.uniqueId;
+    
+    if(pushHistory) { history.pushState({ view: 'article', articleId: post.uniqueId }, "", "?article=" + post.uniqueId); }
+    
+    document.getElementById('og-title').setAttribute("content", post.title);
+    document.getElementById('og-image').setAttribute("content", post.img); 
+    document.title = post.title + " | Open África";
+    
+    document.getElementById('home-view').style.display = 'none';
+    const articleView = document.getElementById('article-view');
+    articleView.style.display = 'block';
+    
+    window.scrollTo(0, 0);
+
+    document.getElementById('source-tag').innerText = post.srcName;
+    document.getElementById('article-title').innerHTML = post.title;
+    document.getElementById('article-date').innerText = new Date(post.date).toLocaleDateString('pt-MZ', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    
+    const img = document.getElementById('feat-img');
+    if (post.img && !post.img.includes('placeholder')) { img.src = post.img; img.style.display = 'block'; } else { img.style.display = 'none'; }
+
+    updateActionBtns();
+    
+    document.getElementById('article-content').innerHTML = post.contentLoaded || "Conteúdo indisponível.";
+    document.getElementById('original-link').href = post.link;
+}
+
+function closeArticleView(updateHistory = true) {
+    const articleView = document.getElementById('article-view');
+    articleView.style.display = 'none';
+    const homeView = document.getElementById('home-view');
+    homeView.style.display = 'block';
+    
+    document.title = "Open África Portal | Excelência em Informação";
+    currentReadingPost = null;
+    
+    if(updateHistory) { history.pushState({ view: 'home' }, "", window.location.pathname); }
+    
+    renderFeed();
+    window.scrollTo(0, savedScrollPosition);
+}
+
+function toggleSaveArticle() {
+    if(!currentReadingPost) return;
+    let saved = JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]');
+    const idx = saved.findIndex(x => x.uniqueId === currentReadingPost.uniqueId);
+    if(idx > -1) { saved.splice(idx, 1); } else { saved.push(currentReadingPost); }
+    localStorage.setItem('premium_news_saved_full', JSON.stringify(saved));
+    updateActionBtns(); updateBadges();
+}
+
+function toggleLike() {
+    if(!currentReadingPost) return;
+    let liked = JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]');
+    const idx = liked.findIndex(x => x.uniqueId === currentReadingPost.uniqueId);
+    if(idx > -1) { liked.splice(idx, 1); } else { liked.push(currentReadingPost); }
+    localStorage.setItem('premium_news_liked_full', JSON.stringify(liked));
+    updateActionBtns(); updateBadges();
+}
+
+function updateActionBtns() {
+    if(!currentReadingPost) return;
+    const saved = JSON.parse(localStorage.getItem('premium_news_saved_full') || '[]').some(x => x.uniqueId === currentReadingPost.uniqueId);
+    document.getElementById('btn-save').classList.toggle('active', saved);
+    const liked = JSON.parse(localStorage.getItem('premium_news_liked_full') || '[]').some(x => x.uniqueId === currentReadingPost.uniqueId);
+    document.getElementById('btn-like').classList.toggle('active', liked);
+}
+
+function shareGlobal() {
+    let shareUrl = window.location.href;
+    let shareTitle = "Open África Portal";
+    
+    if(currentReadingPost) {
+        shareUrl = window.location.origin + window.location.pathname + "?article=" + currentReadingPost.uniqueId;
+        shareTitle = currentReadingPost.title;
+    }
+    
+    if (navigator.share) { 
+        navigator.share({ title: shareTitle, url: shareUrl }).catch(err => console.log('Partilha cancelada')); 
+    } else { 
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + " - " + shareUrl)}`, '_blank');
+    }
+}
+
+window.onload = async () => { 
+    updateBadges();
+    history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedArticleId = urlParams.get('article');
+    
+    if(sharedArticleId) {
+        const parts = sharedArticleId.split('-');
+        const srcSlug = parts[0];
+        const apiId = parts.slice(1).join('-');
+        const source = SOURCES.find(s => s.slug === srcSlug);
+        
+        if(source) {
+            try {
+                const res = await fetch(`${source.api.split('?')[0]}/${apiId}?_embed`);
+                const p = await res.json();
+                
+                const pubDate = p.date_gmt ? (p.date_gmt + 'Z') : p.date;
+                const sharedPost = {
+                    uniqueId: sharedArticleId, apiId: p.id, title: p.title.rendered, date: pubDate, srcName: source.name, srcSlug: source.slug, apiBase: source.api.split('?')[0], link: p.link, img: extractDeepImage(p), contentLoaded: p.content?.rendered || "", detectedCat: detectCategory(p.title.rendered, "")
+                };
+                allPosts.push(sharedPost);
+                openArticleView(sharedPost, false); 
+            } catch(e) { }
+        }
+    }
+    
+    const observer = new IntersectionObserver(e => e[0].isIntersecting && loadNews());
+    observer.observe(document.getElementById('scroll-anchor')); 
+    loadNews(); 
+};
+</script>
+</body>
+</html>
