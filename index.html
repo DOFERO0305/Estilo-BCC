@@ -144,7 +144,7 @@
         <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon-top"></i></button>
     </div>
     <div class="breaking-bar">
-        <div class="breaking-text" id="breaking-ticker">Sincronizando de forma contínua com os principais jornais de Moçambique...</div>
+        <div class="breaking-text" id="breaking-ticker">A carregar informações em tempo real...</div>
     </div>
 </header>
 
@@ -163,7 +163,7 @@
     </div>
 
     <main class="feed" id="feed"></main>
-    <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> Atualizando notícias em tempo real...</div>
+    <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> A detetar publicações recentes...</div>
 </div>
 
 <div id="lists-view" class="app-view">
@@ -259,45 +259,60 @@ function extractImage(p) {
     return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Noticia+365';
 }
 
-function timeAgo(date) {
-    const diff = Math.floor((new Date() - new Date(date)) / 1000);
-    if (diff < 3600) return `${Math.floor(diff/60)} min atrás`;
-    if (diff < 86400) return `${Math.floor(diff/3600)}h atrás`;
-    return new Date(date).toLocaleDateString('pt-MZ');
+// CÁLCULO DE TEMPO EXATO COM PRECISÃO DE SEGUNDOS
+function timeAgo(dateString) {
+    // Usar UTC/GMT puro para evitar problemas de fuso horário
+    const pubDate = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - pubDate) / 1000);
+
+    if (diffInSeconds < 10) return "Agora mesmo";
+    if (diffInSeconds < 60) return `${diffInSeconds} seg atrás`;
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} min atrás`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return "Ontem";
+    if (diffInDays < 7) return `${diffInDays} dias atrás`;
+    
+    return pubDate.toLocaleDateString('pt-MZ');
 }
 
-// LÓGICA DE CARREGAMENTO INSTANTÂNEO (PROGRESSIVO)
+// CARREGAMENTO INSTANTÂNEO (PROGRESSIVO) & CACHE BUSTING
 function loadNewsProgressive() {
     if (isFetching) return;
     isFetching = true;
     document.getElementById('scroll-anchor').style.display = 'flex';
 
     let requestsDone = 0;
+    // timestamp garante que ignora o cache antigo do browser
+    const cacheBuster = new Date().getTime(); 
 
     SOURCES.forEach(src => {
-        fetch(`${src.api}&per_page=6&page=${currentPage}`, { signal: AbortSignal.timeout(8000) })
+        fetch(`${src.api}&per_page=6&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
         .then(res => res.ok ? res.json() : [])
         .then(data => {
             let added = false;
             data.forEach(p => {
                 const id = `${src.slug}-${p.id}`;
                 if (!allPosts.some(x => x.id === id)) {
+                    // Pega a hora GMT (UTC) exata para não ter bugs de fuso
+                    const absoluteDate = p.date_gmt ? (p.date_gmt + 'Z') : p.date;
                     allPosts.push({
                         id, title: p.title.rendered, content: p.content?.rendered || "",
-                        img: extractImage(p), source: src.name, link: p.link, date: p.date
+                        img: extractImage(p), source: src.name, link: p.link, date: absoluteDate
                     });
                     added = true;
                 }
             });
 
-            // Re-renderiza IMEDIATAMENTE assim que uma fonte chega (Efeito Cachoeira)
             if (added) {
-                allPosts.sort((a,b) => new Date(b.date) - new Date(a.date));
-                renderFeed();
+                renderFeed(); // Re-renderiza IMEDIATAMENTE (Efeito Cachoeira Real-Time)
                 if(currentPage === 1) { buildSlider(); updateTicker(); }
             }
         })
-        .catch(() => {}) // Ignora falhas de CORS/Offline de forma silenciosa
+        .catch(() => {})
         .finally(() => {
             requestsDone++;
             if (requestsDone === SOURCES.length) {
@@ -312,6 +327,9 @@ function loadNewsProgressive() {
 function renderFeed() {
     const feed = document.getElementById('feed');
     
+    // ORDENAÇÃO MATEMÁTICA ABSOLUTA: Novas em Cima Sempre
+    allPosts.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
     allPosts.forEach((p, idx) => {
         let card = document.getElementById(`card-${p.id}`);
         if(!card) {
@@ -324,11 +342,16 @@ function renderFeed() {
                 <div class="news-body">
                     <span class="news-tag">${p.source}</span>
                     <h3 class="news-title">${p.title}</h3>
-                    <div class="news-meta"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div>
+                    <div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div>
                 </div>`;
             feed.appendChild(card);
+        } else {
+            // Atualiza dinamicamente o tempo na tela sempre que a função roda
+            const timeBadge = card.querySelector('.time-badge');
+            if(timeBadge) timeBadge.innerHTML = `<i class="far fa-clock"></i> ${timeAgo(p.date)}`;
         }
-        // Assegura a ordem correta sem apagar elementos
+
+        // Posiciona Exatamente (InsertBefore) para empurrar antigas para baixo sem piscar
         if(feed.children[idx] !== card) feed.insertBefore(card, feed.children[idx]);
     });
 }
@@ -362,7 +385,7 @@ function updateTicker() {
     }
 }
 
-// LÓGICA DE HISTÓRICO SEQUENCIAL
+// LÓGICA DE HISTÓRICO SEQUENCIAL INTACTA
 function openArticle(id, isHistoryPop = false) {
     let post = allPosts.find(p => p.id === id) || 
                JSON.parse(localStorage.getItem('news_saved_365')||'[]').find(p => p.id===id) || 
@@ -370,14 +393,12 @@ function openArticle(id, isHistoryPop = false) {
     
     if(!post) return;
 
-    // Se estivermos a abrir a partir da Home, salva o Scroll da Home
     if (!document.getElementById('article-view').classList.contains('active')) {
         homeScrollPos = window.scrollY;
     }
 
     currentReadingPost = post;
 
-    // Se não for um botão "Voltar" do navegador, adiciona ao histórico
     if (!isHistoryPop) {
         history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
     }
@@ -391,33 +412,31 @@ function openArticle(id, isHistoryPop = false) {
 
     updateActionBtns();
     
-    // Notícias relacionadas (Renderizadas como o Feed Normal)
     const grid = document.getElementById('related-grid');
     grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `
         <div class="news-card" onclick="openArticle('${r.id}')" style="box-shadow:none;">
             <img class="news-img" src="${r.img}" style="height:140px;">
-            <div class="news-body"><h4 class="news-title" style="font-size:1rem;">${r.title}</h4></div>
+            <div class="news-body">
+               <h4 class="news-title" style="font-size:1rem; margin-bottom:5px;">${r.title}</h4>
+               <div style="font-size: 0.7rem; color: var(--text-meta);"><i class="far fa-clock"></i> ${timeAgo(r.date)}</div>
+            </div>
         </div>`).join('');
 
     document.getElementById('article-view').classList.add('active');
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
-    document.getElementById('scroll-fab').style.display = 'none'; // Esconde FAB no artigo
+    document.getElementById('scroll-fab').style.display = 'none'; 
     
     document.getElementById('article-view').scrollTo(0,0);
 }
 
-// Botão "Voltar" Customizado - Força o Back do Navegador para manter a ordem
 function goBackHistory() {
     window.history.back();
 }
 
-// Evento que escuta as mudanças de histórico (Voltar no Telefone ou no Botão)
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.view === 'article') {
-        // Volta para um artigo anterior na sequência
         openArticle(e.state.id, true);
     } else {
-        // Volta para a Home
         document.getElementById('article-view').classList.remove('active');
         document.getElementById('bottom-nav').style.transform = 'translateY(0)';
         document.getElementById('scroll-fab').style.display = 'flex';
@@ -426,7 +445,6 @@ window.addEventListener('popstate', (e) => {
     }
 });
 
-// Ações Padrão
 function switchTab(tabId, element = null) {
     if(element) {
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -502,26 +520,18 @@ function shareGlobal() {
     else window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(currentReadingPost.title + " " + window.location.href)}`);
 }
 
-// Botão Flutuante (Scroll Direcional)
 function handleScrollFab() {
-    if (window.scrollY > 500) {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Sobe
-    } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // Desce
-    }
+    if (window.scrollY > 500) window.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 
 window.addEventListener('scroll', () => {
     const fab = document.getElementById('scroll-fab');
-    if (window.scrollY > 500) {
-        fab.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    } else {
-        fab.innerHTML = '<i class="fas fa-arrow-down"></i>';
-    }
+    if (window.scrollY > 500) fab.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    else fab.innerHTML = '<i class="fas fa-arrow-down"></i>';
 });
 
 window.onload = () => {
-    // Garante que a primeira página tem um estado no histórico
     history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
 
     const params = new URLSearchParams(window.location.search);
@@ -531,15 +541,15 @@ window.onload = () => {
         if(src) {
             fetch(`${src.api}&include=${id.split('-')[1]}`).then(r => r.json()).then(d => {
                 if(d[0]) {
-                    allPosts.push({ id, title: d[0].title.rendered, content: d[0].content.rendered, img: extractImage(d[0]), source: src.name, link: d[0].link, date: d[0].date });
+                    const absDate = d[0].date_gmt ? (d[0].date_gmt + 'Z') : d[0].date;
+                    allPosts.push({ id, title: d[0].title.rendered, content: d[0].content.rendered, img: extractImage(d[0]), source: src.name, link: d[0].link, date: absDate });
                     openArticle(id, false);
                 }
             });
         }
     }
     
-    // Infinite Scroll
-    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "300px"});
+    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "400px"});
     obs.observe(document.getElementById('scroll-anchor'));
     
     loadNewsProgressive();
