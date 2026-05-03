@@ -1,0 +1,22 @@
+{
+  "name": "Notícia 365 Moçambique",
+  "short_name": "Notícia 365",
+  "description": "O maior agregador de notícias de Moçambique.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#991b1b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/991b1b/ffffff?text=365",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/991b1b/ffffff?text=365",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
