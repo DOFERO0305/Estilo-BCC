@@ -1,116 +1,631 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-MZ">
 <head>
+    <script type="text/javascript">
+        aclib.runAutoTag({
+            zoneId: 'yzsgymrssb',
+        });
+    </script>
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportsLive Pro | Real-Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#ffffff" id="theme-color-meta">
+    
+    <title>Sua Notícia 365 | Premium App</title>
+
+    <meta id="og-title" property="og:title" content="Sua Notícia 365 | Portal Premium">
+    <meta id="og-image" property="og:image" content="https://via.placeholder.com/1200x630/cc0000/ffffff?text=Sua+Noticia+365">
+    <meta id="og-url" property="og:url" content="">
+    <meta property="og:description" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
+    <meta property="og:type" content="article">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;700&family=Merriweather:wght@300;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #10b981;
+            --primary: #991b1b; 
+            --primary-dark: #7f1d1d;
+            --accent: #1e293b;
+            
+            --bg: #ffffff;
+            --card: #f8f9fa;
+            --text: #0f172a;
+            --text-meta: #64748b;
+            --border: #e2e8f0;
+            --surface: #ffffff;
+            
+            --icon-like: #e11d48;
+            --icon-save: #0284c7;
+            
+            --shadow-app: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.04);
+            
+            --font-ui: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            
+            --nav-height: 65px;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: var(--bg-dark); color: var(--text-main); padding: 20px; }
-        header { background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); }
-        .logo { font-size: 1.5rem; font-weight: bold; }
-        .status-live { color: var(--accent); font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
-        .pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: p 1s infinite; }
-        @keyframes p { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        .match-card { background: var(--card-bg); border-radius: 15px; padding: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .team { flex: 1; text-align: center; font-weight: bold; font-size: 1.1rem; }
-        .score-area { flex: 1; text-align: center; }
-        .score { font-size: 2.5rem; font-weight: 800; display: block; color: var(--accent); }
-        .match-time { font-size: 0.9rem; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 20px; }
-        #debug { background: #450a0a; color: #fca5a5; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; font-family: monospace; font-size: 12px; white-space: pre-wrap; border: 1px solid #ef4444; }
-        .loading { text-align: center; padding: 50px; color: var(--text-muted); font-style: italic; }
+
+        body.dark-mode {
+            --bg: #020617;
+            --card: #0f172a;
+            --text: #f8fafc;
+            --text-meta: #94a3b8;
+            --border: #1e293b;
+            --surface: #0f172a;
+            --primary: #ef4444;
+            
+            --shadow-app: 0 -4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.5);
+            
+            --font-ui: 'Inter', sans-serif;
+            --font-serif: 'Merriweather', serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; padding-bottom: var(--nav-height); transition: background 0.3s ease; }
+        
+        /* Animações App-like */
+        .app-view { display: none; width: 100%; min-height: 100vh; animation: fadeIn 0.3s ease forwards; }
+        .app-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .slide-up-app { animation: slideUpApp 0.4s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
+        @keyframes slideUpApp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        /* Top App Bar */
+        .app-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; box-shadow: var(--shadow-card); border-bottom: 1px solid var(--border); transition: 0.3s; }
+        .app-header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 12px 20px; height: 60px; }
+        .logo { font-family: var(--font-serif); font-weight: 900; font-size: 1.4rem; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; }
+        .logo span { color: var(--primary); }
+        .icon-btn { background: none; border: none; font-size: 1.3rem; color: var(--text); cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; }
+        .icon-btn:active { background: var(--border); }
+
+        .breaking-bar { background: var(--primary); color: white; padding: 6px 20px; font-size: 0.75rem; font-weight: 700; display: flex; overflow: hidden; white-space: nowrap; text-transform: uppercase; }
+        .breaking-text { animation: scrollLeft 25s linear infinite; display: inline-block; padding-left: 100%; }
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* Web App Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: var(--surface); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-app); padding-bottom: env(safe-area-inset-bottom); transition: 0.3s transform; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-meta); font-size: 0.65rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: 0.2s; flex: 1; padding: 10px 0; }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 2px; transition: 0.2s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-3px); }
+
+        /* Slider de 10 Notícias Premium */
+        .hero-slider { max-width: 1200px; margin: 15px auto; padding: 0 15px; position: relative; }
+        .slider-viewport { overflow: hidden; border-radius: 16px; height: 320px; position: relative; box-shadow: var(--shadow-card); }
+        .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
+        .slide { min-width: 100%; position: relative; cursor: pointer; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 20px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; }
+        .slide-tag { background: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
+        .slide-title { font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.2; font-weight: 700; }
+
+        /* Controlos e Pesquisa */
+        .controls-container { max-width: 1200px; margin: 10px auto; padding: 0 15px; }
+        .search-box { position: relative; margin-bottom: 15px; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 0.95rem; font-family: var(--font-ui); outline: none; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-meta); }
+        
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .categories::-webkit-scrollbar { display: none; }
+        .cat-item { padding: 6px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 20px; font-size: 0.8rem; font-weight: 700; white-space: nowrap; cursor: pointer; color: var(--text-meta); text-transform: uppercase; }
+        .cat-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Grelha de Notícias */
+        .feed { padding: 10px 15px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .news-card { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
+        .news-img { width: 100%; height: 180px; object-fit: cover; }
+        .news-body { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
+        .news-tag { color: var(--text); background: var(--card); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 1px solid var(--border); width: fit-content; }
+        .news-title { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; line-height: 1.4; color: var(--text); margin-bottom: 10px; }
+        .news-meta { font-size: 0.75rem; color: var(--text-meta); margin-top: auto; display: flex; justify-content: space-between; font-weight: 600; border-top: 1px solid var(--border); padding-top: 10px; }
+
+        /* Vista do Artigo (Desliza de baixo para cima como App) */
+        #article-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; overflow-y: auto; padding-bottom: 80px; }
+        .article-header { position: sticky; top: 0; background: rgba(var(--bg), 0.9); backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; z-index: 100; border-bottom: 1px solid var(--border); }
+        
+        .article-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .article-tag { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; }
+        .article-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 900; line-height: 1.25; margin-bottom: 20px; color: var(--text); }
+        
+        .article-actions-bar { display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 25px; }
+        .action-icon { background: none; border: none; color: var(--text-meta); font-size: 1.2rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.7rem; font-family: var(--font-ui); font-weight: 600; }
+        .action-icon.active.like { color: var(--icon-like); }
+        .action-icon.active.save { color: var(--icon-save); }
+        .action-icon i { font-size: 1.3rem; }
+
+        .article-main-img { width: 100%; border-radius: 12px; margin-bottom: 25px; object-fit: cover; max-height: 350px; }
+        .article-content { font-size: 1.05rem; line-height: 1.8; color: var(--text); }
+        .article-content img { max-width: 100%; border-radius: 8px; margin: 15px 0; height: auto;}
+
+        /* Menu / Perfil View */
+        #menu-view { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .menu-list { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+        .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 600; cursor: pointer; }
+        .menu-list-item:last-child { border-bottom: none; }
+        .menu-list-item i.left-icon { width: 30px; color: var(--primary); font-size: 1.1rem; }
+        .menu-list-item .badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
+
+        .loader { text-align: center; padding: 30px; color: var(--text-meta); font-size: 1rem; display: none; }
+
+        @media (min-width: 768px) {
+            .bottom-nav { display: none; } /* Ocultar tab bar no desktop */
+            body { padding-bottom: 0; }
+            .hero-slider { padding: 20px; }
+            .slider-viewport { height: 450px; }
+            .slide-title { font-size: 2.2rem; }
+            .article-title { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">⚽ SportsLive</div>
-    <div class="status-live"><span class="pulse"></span> AO VIVO</div>
+<header class="app-header" id="main-header">
+    <div class="app-header-inner">
+        <a href="javascript:void(0)" class="logo" onclick="switchTab('home')">Notícia<span>365</span></a>
+        <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon-top"></i></button>
+    </div>
+    <div class="breaking-bar">
+        <div class="breaking-text" id="breaking-ticker">Sincronizando as notícias mais importantes de Moçambique...</div>
+    </div>
 </header>
 
-<div id="container">
-    <div class="loading" id="loader">Conectando aos servidores da SportsAPI Pro...</div>
+<div id="home-view" class="app-view active">
+    <div class="hero-slider" id="hero-slider" style="display: none;">
+        <div class="slider-viewport">
+            <div class="slider-track" id="slider-track"></div>
+        </div>
+    </div>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Pesquisar..." oninput="localInstantSearch()">
+        </div>
+        <div class="categories" id="cat-container">
+            <div class="cat-item active" onclick="filterCat('', this)">Todas</div>
+            <div class="cat-item" onclick="filterCat('Política', this)">Política</div>
+            <div class="cat-item" onclick="filterCat('Economia', this)">Economia</div>
+            <div class="cat-item" onclick="filterCat('Sociedade', this)">Sociedade</div>
+            <div class="cat-item" onclick="filterCat('Desporto', this)">Desporto</div>
+            <div class="cat-item" onclick="filterCat('Mundo', this)">Mundo</div>
+        </div>
+    </div>
+
+    <main class="feed" id="feed"></main>
+    <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> A carregar dados...</div>
 </div>
 
-<div id="debug"></div>
+<div id="lists-view" class="app-view">
+    <div class="controls-container" style="padding-top: 20px;">
+        <h2 style="font-family: var(--font-serif); margin-bottom: 15px;" id="list-title">Ler Mais Tarde</h2>
+        <main class="feed" id="list-feed"></main>
+    </div>
+</div>
+
+<div id="menu-view" class="app-view">
+    <h2 style="font-family: var(--font-serif); margin-bottom: 20px; padding: 0 10px;">Organização e Definições</h2>
+    
+    <div class="menu-list">
+        <div class="menu-list-item" onclick="setSort('new')">
+            <div><i class="fas fa-bolt left-icon"></i> Ordenar por Mais Recentes</div>
+            <i class="fas fa-check" id="check-new" style="color: var(--primary);"></i>
+        </div>
+        <div class="menu-list-item" onclick="setSort('old')">
+            <div><i class="fas fa-history left-icon"></i> Ordenar por Antigas</div>
+            <i class="fas fa-check" id="check-old" style="display:none; color: var(--primary);"></i>
+        </div>
+        <div class="menu-list-item" onclick="manualRefresh()">
+            <div><i class="fas fa-sync-alt left-icon"></i> Forçar Atualização dos Jornais</div>
+        </div>
+    </div>
+
+    <div class="menu-list">
+        <div class="menu-list-item" onclick="window.open('https://wa.me/258849085157', '_blank')">
+            <div><i class="fab fa-whatsapp left-icon"></i> Falar com o Desenvolvedor</div>
+        </div>
+        <div class="menu-list-item">
+            <div style="font-size: 0.8rem; color: var(--text-meta);">
+                <strong>Sua Notícia 365</strong><br>
+                Criado por Donaldo F. Rodrigues<br>
+                donald.fer.fer@gmail.com
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="article-view" class="app-view slide-up-app">
+    <div class="article-header">
+        <button class="icon-btn" onclick="closeArticle()"><i class="fas fa-arrow-down"></i></button>
+        <div style="font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem;">Leitura</div>
+        <button class="icon-btn" onclick="shareGlobal()"><i class="fas fa-share-alt"></i></button>
+    </div>
+    
+    <main class="article-container" id="article-main-container">
+        <div id="source-tag" class="article-tag">...</div>
+        <h1 id="article-title" class="article-title">...</h1>
+        
+        <div class="article-actions-bar">
+            <button class="action-icon like" id="btn-like" onclick="toggleLike()"><i class="fas fa-heart"></i> Adorar</button>
+            <button class="action-icon save" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark"></i> Guardar</button>
+            <button class="action-icon" onclick="window.open(currentReadingPost.link, '_blank')"><i class="fas fa-external-link-alt"></i> Original</button>
+        </div>
+
+        <img id="feat-img" class="article-main-img" src="" style="display:none">
+        <div id="article-content" class="article-content"></div>
+
+        <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;" id="related-section">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 15px;">Outras Notícias</h3>
+            <div class="feed" id="related-grid" style="padding: 0; display: grid; gap: 15px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); min-height: auto;"></div>
+        </div>
+    </main>
+</div>
+
+<nav class="bottom-nav" id="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home', this)">
+        <i class="fas fa-home"></i> Início
+    </div>
+    <div class="nav-item" onclick="switchTab('saved', this)">
+        <i class="fas fa-bookmark"></i> Guardados
+    </div>
+    <div class="nav-item" onclick="switchTab('liked', this)">
+        <i class="fas fa-heart"></i> Favoritos
+    </div>
+    <div class="nav-item" onclick="switchTab('menu', this)">
+        <i class="fas fa-user-cog"></i> Menu
+    </div>
+</nav>
 
 <script>
-    const API_KEY = '36cb090c-d7ac-4a18-bffc-61d3b57ff1a9';
-    // Usando o ID que você passou. Se quiser todos os jogos, a URL muda para /matches/today
-    const URL_ALVO = 'https://v2.football.sportsapipro.com/api/match/14025056';
-    
-    // Proxy para evitar erro de CORS no navegador
-    const PROXY = 'https://api.allorigins.win/raw?url=';
+const SOURCES = [
+    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
+    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
+    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts?_embed", slug: "mznews" },
+    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts?_embed", slug: "folha" },
+    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts?_embed", slug: "evidencias" },
+    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts?_embed", slug: "integrity" },
+    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts?_embed", slug: "savana" },
+    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts?_embed", slug: "aim" },
+    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?_embed", slug: "noticias" },
+    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts?_embed", slug: "diario" },
+    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts?_embed", slug: "timesdetodos" }
+];
 
-    async function loadData() {
-        const container = document.getElementById('container');
-        const debug = document.getElementById('debug');
+let allPosts = [], currentPage = 1, isFetching = false;
+let currentCat = '', sortOrder = 'new';
+let currentReadingPost = null, savedScrollPosition = 0;
+let sliderInterval;
+
+function detectCategory(title, content) {
+    const text = (title + " " + (content || "")).toLowerCase();
+    if (text.match(/política|governo|frelimo|renamo|eleições|presidente/)) return 'Política';
+    if (text.match(/economia|banco|metical|dólar|mercado|empresas|finanças/)) return 'Economia';
+    if (text.match(/desporto|futebol|mambas|moçambola/)) return 'Desporto';
+    if (text.match(/mundo|internacional|eua|rússia|senegal/)) return 'Mundo';
+    return 'Sociedade'; 
+}
+
+function extractDeepImage(p) {
+    if (p._embedded && p._embedded['wp:featuredmedia']) return p._embedded['wp:featuredmedia'][0].source_url;
+    if (p.yoast_head_json && p.yoast_head_json.og_image) return p.yoast_head_json.og_image[0].url;
+    return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Noticia+365';
+}
+
+function timeAgo(dateString) {
+    const diff = Math.floor((new Date() - new Date(dateString)) / 1000);
+    if (diff < 3600) return `${Math.floor(diff/60)} min atrás`;
+    if (diff < 86400) return `${Math.floor(diff/3600)}h atrás`;
+    return new Date(dateString).toLocaleDateString('pt-MZ');
+}
+
+// Lógica de Navegação da Web App (Tabs)
+function switchTab(tabId, element = null) {
+    if(element) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+    } else {
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
+    }
+
+    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    
+    if(tabId === 'home') {
+        document.getElementById('home-view').classList.add('active');
+        document.getElementById('main-header').style.display = 'block';
+        currentCat = ''; 
+        document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+        document.querySelector('.cat-item').classList.add('active');
+        renderFeed();
+    } else if (tabId === 'saved' || tabId === 'liked') {
+        document.getElementById('lists-view').classList.add('active');
+        document.getElementById('main-header').style.display = 'none';
+        document.getElementById('list-title').innerText = tabId === 'saved' ? 'Ler Mais Tarde' : 'Meus Favoritos';
+        renderListFeed(tabId);
+    } else if (tabId === 'menu') {
+        document.getElementById('menu-view').classList.add('active');
+        document.getElementById('main-header').style.display = 'none';
+    }
+    
+    window.scrollTo(0,0);
+}
+
+// Fetch Async Rápido
+async function fetchSafe(url) {
+    try {
+        const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+        return res.ok ? await res.json() : [];
+    } catch { return []; }
+}
+
+async function loadNews() {
+    if (isFetching) return;
+    isFetching = true;
+    document.getElementById('scroll-anchor').style.display = 'block';
+
+    let pending = SOURCES.length;
+    let hasNew = false;
+
+    SOURCES.forEach(async (src) => {
+        const data = await fetchSafe(`${src.api}&per_page=8&page=${currentPage}`);
+        data.forEach(p => {
+            const id = `${src.slug}-${p.id}`;
+            if (!allPosts.some(x => x.id === id)) {
+                allPosts.push({
+                    id: id, title: p.title.rendered, content: p.content?.rendered || "",
+                    img: extractDeepImage(p), source: src.name, link: p.link, 
+                    date: p.date, cat: detectCategory(p.title.rendered, p.content?.rendered)
+                });
+                hasNew = true;
+            }
+        });
         
-        try {
-            const response = await fetch(PROXY + encodeURIComponent(URL_ALVO), {
-                method: 'GET',
-                headers: {
-                    'x-api-key': API_KEY,
-                    'Accept': 'application/json'
+        pending--;
+        if(pending === 0) {
+            isFetching = false; currentPage++;
+            document.getElementById('scroll-anchor').style.display = 'none';
+            if(hasNew) renderFeed();
+            if(currentPage === 2) { buildSlider(); updateTicker(); }
+        }
+    });
+}
+
+function renderFeed() {
+    allPosts.sort((a,b) => sortOrder === 'new' ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
+    
+    const feed = document.getElementById('feed');
+    let displayList = currentCat ? allPosts.filter(p => p.cat === currentCat) : allPosts;
+
+    document.getElementById('hero-slider').style.display = currentCat ? 'none' : 'block';
+
+    displayList.forEach((p, idx) => {
+        let card = document.getElementById(`card-${p.id}`);
+        if(!card) {
+            card = document.createElement('div');
+            card.id = `card-${p.id}`;
+            card.className = 'news-card';
+            card.onclick = () => openArticleById(p.id);
+            card.innerHTML = `
+                <img class="news-img" src="${p.img}" loading="lazy">
+                <div class="news-body">
+                    <span class="news-tag">${p.source}</span>
+                    <h3 class="news-title">${p.title}</h3>
+                    <div class="news-meta"><span><i class="far fa-clock"></i> ${timeAgo(p.date)}</span></div>
+                </div>`;
+        }
+        if(feed.children[idx] !== card) feed.insertBefore(card, feed.children[idx]);
+    });
+    
+    Array.from(feed.children).forEach(c => {
+        if(!displayList.some(p => `card-${p.id}` === c.id)) c.style.display = 'none';
+        else c.style.display = 'flex';
+    });
+}
+
+function renderListFeed(type) {
+    const list = JSON.parse(localStorage.getItem(type === 'saved' ? 'news_saved_365' : 'news_liked_365') || '[]');
+    const feed = document.getElementById('list-feed');
+    feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px; color: var(--text-meta);">A lista está vazia.</p>' : '';
+    
+    list.forEach(p => {
+        feed.innerHTML += `
+            <div class="news-card" onclick="openArticleById('${p.id}', true)">
+                <img class="news-img" src="${p.img}">
+                <div class="news-body">
+                    <span class="news-tag">${p.source}</span>
+                    <h3 class="news-title">${p.title}</h3>
+                </div>
+            </div>`;
+    });
+}
+
+function buildSlider() {
+    const track = document.getElementById('slider-track');
+    const top10 = allPosts.slice(0, 10);
+    if(top10.length === 0) return;
+
+    track.innerHTML = top10.map(p => `
+        <div class="slide" onclick="openArticleById('${p.id}')">
+            <img src="${p.img}">
+            <div class="slide-content">
+                <span class="slide-tag">${p.source}</span>
+                <h2 class="slide-title">${p.title}</h2>
+            </div>
+        </div>`).join('');
+
+    let idx = 0;
+    clearInterval(sliderInterval);
+    sliderInterval = setInterval(() => {
+        idx = (idx + 1) % top10.length;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+    }, 4500);
+}
+
+function updateTicker() {
+    if(allPosts.length > 0) {
+        document.getElementById('breaking-ticker').innerHTML = allPosts.slice(0, 5).map(p => `<span style="opacity:0.7; margin-right:5px;">${p.source}</span> ${p.title}`).join(" &nbsp; • &nbsp; ");
+    }
+}
+
+function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = cat; renderFeed();
+}
+
+// Lógica de Leitura (Comportamento App Sliding)
+function openArticleById(id, fromList = false) {
+    let post = allPosts.find(p => p.id === id);
+    if(!post && fromList) {
+        post = JSON.parse(localStorage.getItem('news_saved_365')||'[]').find(p => p.id===id) || JSON.parse(localStorage.getItem('news_liked_365')||'[]').find(p => p.id===id);
+    }
+    
+    if(post) {
+        savedScrollPosition = window.scrollY;
+        currentReadingPost = post;
+        
+        // Deep link via History API
+        history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
+
+        document.getElementById('source-tag').innerText = post.source;
+        document.getElementById('article-title').innerHTML = post.title;
+        document.getElementById('feat-img').src = post.img;
+        document.getElementById('feat-img').style.display = 'block';
+        document.getElementById('article-content').innerHTML = post.content;
+
+        updateActionBtns();
+        
+        // Relacionados
+        const grid = document.getElementById('related-grid');
+        grid.innerHTML = allPosts.filter(r => r.id !== post.id && r.cat === post.cat).slice(0, 4).map(r => `
+            <div class="news-card" onclick="openArticleById('${r.id}')" style="box-shadow:none;">
+                <img class="news-img" src="${r.img}" style="height:100px;">
+                <div class="news-body" style="padding:10px;"><h4 style="font-size:0.85rem; line-height:1.3;">${r.title}</h4></div>
+            </div>`).join('');
+
+        document.getElementById('article-view').classList.add('active');
+        document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; // Esconde barra em mobile
+        document.getElementById('article-view').scrollTo(0,0);
+    }
+}
+
+function closeArticle() {
+    document.getElementById('article-view').classList.remove('active');
+    document.getElementById('bottom-nav').style.transform = 'translateY(0)';
+    currentReadingPost = null;
+    history.pushState({ view: 'home' }, "", window.location.pathname);
+    window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+}
+
+window.addEventListener('popstate', (e) => {
+    if(document.getElementById('article-view').classList.contains('active')) closeArticle();
+});
+
+// Ações Mantidas no Local Storage
+function toggleSaveArticle() {
+    if(!currentReadingPost) return;
+    let saved = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
+    const idx = saved.findIndex(x => x.id === currentReadingPost.id);
+    if(idx > -1) saved.splice(idx, 1); else saved.push(currentReadingPost);
+    localStorage.setItem('news_saved_365', JSON.stringify(saved));
+    updateActionBtns();
+}
+
+function toggleLike() {
+    if(!currentReadingPost) return;
+    let liked = JSON.parse(localStorage.getItem('news_liked_365') || '[]');
+    const idx = liked.findIndex(x => x.id === currentReadingPost.id);
+    if(idx > -1) liked.splice(idx, 1); else liked.push(currentReadingPost);
+    localStorage.setItem('news_liked_365', JSON.stringify(liked));
+    updateActionBtns();
+}
+
+function updateActionBtns() {
+    if(!currentReadingPost) return;
+    const isSaved = JSON.parse(localStorage.getItem('news_saved_365') || '[]').some(x => x.id === currentReadingPost.id);
+    const isLiked = JSON.parse(localStorage.getItem('news_liked_365') || '[]').some(x => x.id === currentReadingPost.id);
+    document.getElementById('btn-save').classList.toggle('active', isSaved);
+    document.getElementById('btn-like').classList.toggle('active', isLiked);
+}
+
+function shareGlobal() {
+    if(!currentReadingPost) return;
+    const url = window.location.href;
+    if(navigator.share) navigator.share({ title: currentReadingPost.title, url: url });
+    else window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(currentReadingPost.title + " " + url)}`);
+}
+
+function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('theme-icon-top').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#ffffff");
+}
+
+function setSort(order) {
+    sortOrder = order;
+    document.getElementById('check-new').style.display = order === 'new' ? 'block' : 'none';
+    document.getElementById('check-old').style.display = order === 'old' ? 'block' : 'none';
+    switchTab('home');
+}
+
+function manualRefresh() {
+    allPosts = []; currentPage = 1;
+    document.getElementById('feed').innerHTML = '';
+    loadNews(); switchTab('home');
+}
+
+function localInstantSearch() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    Array.from(document.getElementById('feed').children).forEach(c => {
+        const title = c.querySelector('.news-title').innerText.toLowerCase();
+        c.style.display = title.includes(q) ? 'flex' : 'none';
+    });
+}
+
+window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('noticia')) {
+        const id = params.get('noticia');
+        const src = SOURCES.find(s => s.slug === id.split('-')[0]);
+        if(src) {
+            fetch(`${src.api}&include=${id.split('-')[1]}`).then(r => r.json()).then(d => {
+                if(d[0]) {
+                    const p = d[0];
+                    allPosts.push({ id, title: p.title.rendered, content: p.content.rendered, img: extractDeepImage(p), source: src.name, link: p.link, date: p.date, cat: detectCategory(p.title.rendered) });
+                    openArticleById(id);
                 }
             });
-
-            if (!response.ok) throw new Error('Erro na resposta do servidor: ' + response.status);
-
-            const json = await response.json();
-            const data = json.data || json; // Garante pegar os dados se vierem dentro de "data"
-
-            // Log de segurança para você ver no console do navegador (F12)
-            console.log("Dados Recebidos:", data);
-
-            if (data) {
-                renderMatch(data);
-            } else {
-                throw new Error('A API retornou sucesso, mas sem dados da partida.');
-            }
-
-        } catch (err) {
-            document.getElementById('loader').style.display = 'none';
-            debug.style.display = 'block';
-            debug.innerText = "ERRO TÉCNICO:\n" + err.message + "\n\nResposta da API (ver console F12)";
-            console.error(err);
         }
     }
-
-    function renderMatch(m) {
-        const container = document.getElementById('container');
-        container.innerHTML = '';
-
-        // Mapeamento dinâmico (Tenta várias chaves comuns em APIs de futebol)
-        const homeName = m.home_team?.name || m.homeTeam?.name || m.localTeam?.name || "Time Casa";
-        const awayName = m.away_team?.name || m.awayTeam?.name || m.visitorTeam?.name || "Time Fora";
-        const homeScore = m.stats?.home_score ?? m.scores?.localteam_score ?? m.home_score ?? 0;
-        const awayScore = m.stats?.away_score ?? m.scores?.visitorteam_score ?? m.away_score ?? 0;
-        const status = m.status_name || m.status || m.time?.status || "Agendado";
-
-        const html = `
-            <div class="match-card">
-                <div class="team">${homeName}</div>
-                <div class="score-area">
-                    <span class="match-time">${status}</span>
-                    <span class="score">${homeScore} - ${awayScore}</span>
-                </div>
-                <div class="team">${awayName}</div>
-            </div>
-            <div style="text-align:center; color:gray; font-size:12px;">ID da Partida: ${m.id || 'N/A'}</div>
-        `;
-        container.innerHTML = html;
-    }
-
-    loadData();
+    
+    const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNews(); });
+    obs.observe(document.getElementById('scroll-anchor'));
+    loadNews();
+};
 </script>
 
+<script data-cfasync="false" type="text/javascript" id="clever-core">
+/* <![CDATA[ */
+    (function (document, window) {
+        var a, c = document.createElement("script"), f = window.frameElement;
+        c.id = "CleverCoreLoader101444";
+        c.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
+        c.async = !0;
+        c.type = "text/javascript";
+        c.setAttribute("data-target", window.name || (f && f.getAttribute("id")));
+        c.setAttribute("data-callback", "put-your-callback-function-here");
+        c.setAttribute("data-callback-url-click", "put-your-click-macro-here");
+        c.setAttribute("data-callback-url-view", "put-your-view-macro-here");
+        try { a = parent.document.getElementsByTagName("script")[0] || document.getElementsByTagName("script")[0]; } catch(e) { a = document.getElementsByTagName("script")[0]; }
+        a.parentNode.insertBefore(c, a);
+    })(document, window);
+/* ]]> */
+</script>
 </body>
 </html>
