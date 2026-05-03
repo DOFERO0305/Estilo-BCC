@@ -1,423 +1,115 @@
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>África 360 | Premium News Portal</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;700&family=Merriweather:wght@300;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsLive Pro | Real-Time</title>
     <style>
         :root {
-            /* Modo Claro (Elegância) */
-            --bg: #ffffff;
-            --surface: #f8f9fa;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --primary: #991b1b; 
-            --border: #e2e8f0;
-            --card: #ffffff;
-            --tag-bg: #f1f5f9;
-            --tag-text: #0f172a;
-            --font-titles: 'Playfair Display', serif;
-            --font-body: 'Plus Jakarta Sans', sans-serif;
-            --shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        body.dark-mode {
-            /* Modo Escuro (Alto Contraste) */
-            --bg: #020617;
-            --surface: #0f172a;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --primary: #ef4444;
-            --border: #1e293b;
-            --card: #0f172a;
-            --tag-bg: #1e293b;
-            --tag-text: #f8fafc;
-            --font-titles: 'Merriweather', serif;
-            --font-body: 'Inter', sans-serif;
-            --shadow: 0 10px 40px rgba(0,0,0,0.4);
+            --accent: #10b981;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text-main); font-family: var(--font-body); transition: background 0.3s, color 0.3s; overflow-x: hidden; line-height: 1.6; }
-
-        .reveal-article { animation: slideUp 0.6s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Header e Topo */
-        header { position: sticky; top: 0; z-index: 1000; background: var(--bg); border-bottom: 1px solid var(--border); padding: 15px 0; }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .logo { font-family: var(--font-titles); font-size: 1.8rem; font-weight: 900; color: var(--text-main); text-decoration: none; letter-spacing: -1px; cursor: pointer; }
-        .logo span { color: var(--primary); }
-        .btn-round { width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .btn-round:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-        /* Slider de 10 Notícias */
-        .hero-slider { max-width: 1300px; margin: 20px auto; padding: 0 20px; position: relative; }
-        .slider-viewport { overflow: hidden; border-radius: 20px; box-shadow: var(--shadow); height: 450px; position: relative; }
-        .slider-track { display: flex; transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1); height: 100%; }
-        .slide { min-width: 100%; position: relative; cursor: pointer; overflow: hidden; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-        .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px 40px 40px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; }
-        .slide-tag { background: var(--primary); color: white; padding: 5px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; display: inline-block; }
-        .slide-title { font-family: var(--font-titles); font-size: 2.2rem; line-height: 1.1; max-width: 800px; }
-
-        /* Pesquisa */
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
-        .search-area { margin: 30px 0; position: relative; }
-        .search-area input { width: 100%; padding: 18px 25px 18px 55px; border-radius: 15px; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); font-size: 1rem; outline: none; transition: 0.3s; }
-        .search-area i { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-
-        /* Grid à Prova de Bugs (Smooth Scroll) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; margin-top: 20px; }
-        .card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; }
-        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: var(--primary); }
-        .card-img { width: 100%; height: 220px; object-fit: cover; background: var(--surface); }
-        .card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-tag { background: var(--tag-bg); color: var(--tag-text); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; margin-bottom: 15px; width: fit-content; }
-        .card-title { font-family: var(--font-titles); font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: var(--text-main); margin-bottom: 15px; }
-        .card-meta { margin-top: auto; font-size: 0.8rem; color: var(--text-muted); font-weight: 600; border-top: 1px solid var(--border); padding-top: 15px;}
-
-        /* Artigo e Relacionados */
-        #article-view { display: none; background: var(--bg); min-height: 100vh; }
-        .article-header-nav { position: sticky; top: 0; background: var(--bg); padding: 15px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); z-index: 1000; }
-        .article-hero-img { width: 100%; height: 50vh; object-fit: cover; }
-        .article-content-wrap { max-width: 800px; margin: -100px auto 100px; position: relative; background: var(--card); padding: 50px; border-radius: 20px; box-shadow: var(--shadow); }
-        .article-title-big { font-family: var(--font-titles); font-size: 2.8rem; line-height: 1.1; margin-bottom: 30px; }
-        .article-text { font-size: 1.15rem; line-height: 1.8; color: var(--text-main); }
-        .article-text img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
-
-        .related-section { margin-top: 60px; padding-top: 40px; border-top: 2px solid var(--border); }
-        .related-section h3 { font-family: var(--font-titles); font-size: 1.8rem; margin-bottom: 25px; }
-        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .rel-card { cursor: pointer; transition: 0.3s; }
-        .rel-card:hover { opacity: 0.8; }
-        .rel-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
-        .rel-card h4 { font-size: 0.95rem; line-height: 1.4; color: var(--text-main); font-weight: 700; }
-
-        .loader-main { text-align: center; padding: 40px; color: var(--text-muted); font-size: 1.2rem; display: none; }
-
-        @media (max-width: 768px) {
-            .slide-title { font-size: 1.5rem; }
-            .article-title-big { font-size: 2rem; }
-            .article-content-wrap { margin-top: 0; border-radius: 0; padding: 25px; }
-            .slider-viewport { border-radius: 0; height: 350px; }
-            .hero-slider { padding: 0; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-main); padding: 20px; }
+        header { background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .status-live { color: var(--accent); font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+        .pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: p 1s infinite; }
+        @keyframes p { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .match-card { background: var(--card-bg); border-radius: 15px; padding: 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .team { flex: 1; text-align: center; font-weight: bold; font-size: 1.1rem; }
+        .score-area { flex: 1; text-align: center; }
+        .score { font-size: 2.5rem; font-weight: 800; display: block; color: var(--accent); }
+        .match-time { font-size: 0.9rem; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 20px; }
+        #debug { background: #450a0a; color: #fca5a5; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; font-family: monospace; font-size: 12px; white-space: pre-wrap; border: 1px solid #ef4444; }
+        .loading { text-align: center; padding: 50px; color: var(--text-muted); font-style: italic; }
     </style>
 </head>
 <body>
 
-<header id="main-header">
-    <div class="nav-container">
-        <div class="logo" onclick="goHomeForce()">ÁFRICA<span>360</span></div>
-        <button class="btn-round" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
-    </div>
+<header>
+    <div class="logo">⚽ SportsLive</div>
+    <div class="status-live"><span class="pulse"></span> AO VIVO</div>
 </header>
 
-<div id="home-view">
-    <div class="hero-slider" id="hero-slider" style="display:none;">
-        <div class="slider-viewport">
-            <div class="slider-track" id="slider-track"></div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="search-area">
-            <i class="fas fa-search"></i>
-            <input type="text" id="search-input" placeholder="Pesquisar análises, política ou economia..." oninput="localSearch()">
-        </div>
-
-        <main class="grid" id="news-grid"></main>
-        <div id="scroll-anchor" class="loader-main"><i class="fas fa-circle-notch fa-spin"></i> Processando dados...</div>
-    </div>
+<div id="container">
+    <div class="loading" id="loader">Conectando aos servidores da SportsAPI Pro...</div>
 </div>
 
-<div id="article-view">
-    <div class="article-header-nav">
-        <button class="btn-round" onclick="closeArticle()"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn-round" onclick="shareArticle()"><i class="fas fa-share-nodes"></i></button>
-    </div>
-    <div id="article-full-content"></div>
-</div>
+<div id="debug"></div>
 
 <script>
-// Todas as 11 Fontes Originais de Moçambique Restauradas
-const SOURCES = [
-    { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
-    { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
-    { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts?_embed", slug: "mznews" },
-    { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts?_embed", slug: "folha" },
-    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts?_embed", slug: "evidencias" },
-    { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts?_embed", slug: "integrity" },
-    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts?_embed", slug: "savana" },
-    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts?_embed", slug: "aim" },
-    { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?_embed", slug: "noticias" },
-    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts?_embed", slug: "diario" },
-    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts?_embed", slug: "timesdetodos" }
-];
-
-let allPosts = [];
-let currentPage = 1;
-let isFetching = false;
-let savedScroll = 0;
-let sliderInterval;
-let currentPost = null;
-
-// Categorização simples
-function getCat(title, content) {
-    const txt = (title + " " + (content||"")).toLowerCase();
-    if(txt.match(/política|governo|frelimo|renamo|presidente/)) return 'Política';
-    if(txt.match(/economia|banco|metical|mercado/)) return 'Economia';
-    if(txt.match(/desporto|futebol|moçambola/)) return 'Desporto';
-    return 'Geral';
-}
-
-function getImg(p) {
-    if (p._embedded && p._embedded['wp:featuredmedia']) return p._embedded['wp:featuredmedia'][0].source_url;
-    if (p.yoast_head_json && p.yoast_head_json.og_image) return p.yoast_head_json.og_image[0].url;
-    return 'https://via.placeholder.com/800x500/1e293b/ffffff?text=Africa+360';
-}
-
-// Timeout Fetcher para Redes Fracas - Não bloqueia a UI se um site demorar
-async function fetchSafe(url) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 8000); // 8 segundos limite
-    try {
-        const res = await fetch(url, { signal: controller.signal });
-        clearTimeout(id);
-        return res.ok ? await res.json() : [];
-    } catch (e) {
-        clearTimeout(id);
-        return [];
-    }
-}
-
-// Carregamento Simultâneo Rápido
-async function loadNews() {
-    if (isFetching) return;
-    isFetching = true;
-    document.getElementById('scroll-anchor').style.display = 'block';
-
-    let pending = SOURCES.length;
-    let hasNewData = false;
-
-    SOURCES.forEach(async (src) => {
-        const data = await fetchSafe(`${src.api}&per_page=10&page=${currentPage}`);
-        data.forEach(p => {
-            const id = `${src.slug}-${p.id}`;
-            if (!allPosts.some(x => x.id === id)) {
-                allPosts.push({
-                    id: id, title: p.title.rendered, content: p.content?.rendered || "",
-                    img: getImg(p), source: src.name, link: p.link, 
-                    date: p.date, cat: getCat(p.title.rendered, p.content?.rendered)
-                });
-                hasNewData = true;
-            }
-        });
-
-        pending--;
-        if(pending === 0) {
-            isFetching = false;
-            currentPage++;
-            document.getElementById('scroll-anchor').style.display = 'none';
-            if(hasNewData) renderSmoothGrid();
-            if(currentPage === 2) buildSlider(); // Constrói o slider após a 1ª página
-        }
-    });
-}
-
-// Função Mágica Anti-Bug/Tremer: Reordena os nós DOM sem apagar os que já existem
-function renderSmoothGrid() {
-    // 1. Garante que as notícias mais recentes estão sempre no topo da Array
-    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const API_KEY = '36cb090c-d7ac-4a18-bffc-61d3b57ff1a9';
+    // Usando o ID que você passou. Se quiser todos os jogos, a URL muda para /matches/today
+    const URL_ALVO = 'https://v2.football.sportsapipro.com/api/match/14025056';
     
-    const grid = document.getElementById('news-grid');
-    
-    // 2. Insere ou move os elementos no DOM de acordo com a ordem correta
-    allPosts.forEach((post, index) => {
-        let card = document.getElementById(`card-${post.id}`);
+    // Proxy para evitar erro de CORS no navegador
+    const PROXY = 'https://api.allorigins.win/raw?url=';
+
+    async function loadData() {
+        const container = document.getElementById('container');
+        const debug = document.getElementById('debug');
         
-        if (!card) {
-            card = document.createElement('div');
-            card.id = `card-${post.id}`;
-            card.className = 'card reveal-article';
-            card.onclick = () => openArticle(post.id);
-            
-            const dateObj = new Date(post.date);
-            const dataStr = dateObj.toLocaleDateString('pt-MZ', { day: '2-digit', month: 'short' });
-
-            card.innerHTML = `
-                <img class="card-img" src="${post.img}" loading="lazy" alt="News">
-                <div class="card-body">
-                    <span class="card-tag">${post.source}</span>
-                    <h3 class="card-title">${post.title}</h3>
-                    <div class="card-meta"><i class="far fa-clock"></i> ${dataStr}</div>
-                </div>
-            `;
-        }
-        
-        if (grid.children[index] !== card) {
-            grid.insertBefore(card, grid.children[index]);
-        }
-    });
-}
-
-function buildSlider() {
-    const track = document.getElementById('slider-track');
-    const top10 = allPosts.slice(0, 10);
-    if(top10.length === 0) return;
-
-    document.getElementById('hero-slider').style.display = 'block';
-    track.innerHTML = top10.map(p => `
-        <div class="slide" onclick="openArticle('${p.id}')">
-            <img src="${p.img}" loading="lazy">
-            <div class="slide-content">
-                <span class="slide-tag">${p.source}</span>
-                <h2 class="slide-title">${p.title}</h2>
-            </div>
-        </div>
-    `).join('');
-
-    let idx = 0;
-    clearInterval(sliderInterval);
-    sliderInterval = setInterval(() => {
-        idx = (idx + 1) % top10.length;
-        track.style.transform = `translateX(-${idx * 100}%)`;
-    }, 4500);
-}
-
-function openArticle(id) {
-    const post = allPosts.find(p => p.id === id);
-    if(!post) return;
-    
-    savedScroll = window.scrollY; // Grava o Scroll exato
-    currentPost = post;
-
-    // Atualiza URL para partilha direta (Deep Link)
-    const newUrl = window.location.origin + window.location.pathname + `?noticia=${id}`;
-    window.history.pushState({ path: newUrl }, '', newUrl);
-
-    // Carrega Relacionados
-    const relatedHtml = allPosts
-        .filter(r => r.id !== post.id && r.cat === post.cat).slice(0, 4)
-        .map(r => `
-            <div class="rel-card" onclick="openArticle('${r.id}')">
-                <img src="${r.img}" loading="lazy">
-                <h4>${r.title}</h4>
-            </div>
-        `).join('');
-
-    document.getElementById('article-full-content').innerHTML = `
-        <img class="article-hero-img" src="${post.img}">
-        <div class="article-content-wrap reveal-article">
-            <span class="slide-tag" style="background:var(--accent)">${post.source}</span>
-            <h1 class="article-title-big">${post.title}</h1>
-            <div class="article-text">${post.content}</div>
-            
-            <a href="${post.link}" target="_blank" style="display:block; margin-top:30px; color:var(--primary); font-weight:700; text-decoration:none;">
-                <i class="fas fa-external-link-alt"></i> Ler reportagem original em ${post.source}
-            </a>
-
-            ${relatedHtml ? `
-            <div class="related-section">
-                <h3>Leia Também</h3>
-                <div class="related-grid">${relatedHtml}</div>
-            </div>` : ''}
-        </div>
-    `;
-
-    document.getElementById('home-view').style.display = 'none';
-    document.getElementById('main-header').style.display = 'none';
-    document.getElementById('article-view').style.display = 'block';
-    window.scrollTo(0,0);
-}
-
-function closeArticle() {
-    document.getElementById('article-view').style.display = 'none';
-    document.getElementById('home-view').style.display = 'block';
-    document.getElementById('main-header').style.display = 'block';
-    
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.pushState({ path: cleanUrl }, '', cleanUrl);
-    
-    // Restaura o Scroll Exatamente sem tremer
-    window.scrollTo({ top: savedScroll, behavior: 'instant' });
-}
-
-function shareArticle() {
-    if(!currentPost) return;
-    const shareUrl = window.location.href; // Copia a URL atual que tem o ?noticia=ID
-    const shareTitle = currentPost.title;
-
-    if (navigator.share) {
-        navigator.share({ title: shareTitle, url: shareUrl });
-    } else {
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + " - " + shareUrl)}`);
-    }
-}
-
-function localSearch() {
-    const q = document.getElementById('search-input').value.toLowerCase();
-    Array.from(document.getElementById('news-grid').children).forEach(card => {
-        const title = card.querySelector('.card-title').innerText.toLowerCase();
-        card.style.display = title.includes(q) ? 'flex' : 'none';
-    });
-}
-
-function goHomeForce() {
-    if(document.getElementById('article-view').style.display === 'block') closeArticle();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function toggleTheme() {
-    const isDark = document.body.classList.toggle('dark-mode');
-    document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-}
-
-// Lida com Botão voltar do Android/Navegador
-window.addEventListener('popstate', () => {
-    const params = new URLSearchParams(window.location.search);
-    if(!params.get('noticia') && document.getElementById('article-view').style.display === 'block') {
-        closeArticle();
-    }
-});
-
-// Inicialização e Infinite Scroll
-window.onload = () => {
-    // Verifica se abriram um link partilhado
-    const params = new URLSearchParams(window.location.search);
-    const noticiaId = params.get('noticia');
-    if(noticiaId) {
-        // Se abrir um link partilhado, busca imediatamente essa fonte
-        const srcSlug = noticiaId.split('-')[0];
-        const source = SOURCES.find(s => s.slug === srcSlug);
-        if(source) {
-            fetch(`${source.api}&include=${noticiaId.split('-')[1]}`)
-            .then(res => res.json())
-            .then(data => {
-                if(data[0]) {
-                    allPosts.push({
-                        id: noticiaId, title: data[0].title.rendered, content: data[0].content.rendered,
-                        img: getImg(data[0]), source: source.name, link: data[0].link, date: data[0].date, cat: getCat(data[0].title.rendered)
-                    });
-                    openArticle(noticiaId);
+        try {
+            const response = await fetch(PROXY + encodeURIComponent(URL_ALVO), {
+                method: 'GET',
+                headers: {
+                    'x-api-key': API_KEY,
+                    'Accept': 'application/json'
                 }
             });
+
+            if (!response.ok) throw new Error('Erro na resposta do servidor: ' + response.status);
+
+            const json = await response.json();
+            const data = json.data || json; // Garante pegar os dados se vierem dentro de "data"
+
+            // Log de segurança para você ver no console do navegador (F12)
+            console.log("Dados Recebidos:", data);
+
+            if (data) {
+                renderMatch(data);
+            } else {
+                throw new Error('A API retornou sucesso, mas sem dados da partida.');
+            }
+
+        } catch (err) {
+            document.getElementById('loader').style.display = 'none';
+            debug.style.display = 'block';
+            debug.innerText = "ERRO TÉCNICO:\n" + err.message + "\n\nResposta da API (ver console F12)";
+            console.error(err);
         }
     }
 
-    // Sistema de Infinite Scroll sem bug
-    const observer = new IntersectionObserver(e => {
-        if(e[0].isIntersecting && !isFetching) loadNews();
-    }, { rootMargin: '200px' });
-    observer.observe(document.getElementById('scroll-anchor'));
-    
-    loadNews();
-};
+    function renderMatch(m) {
+        const container = document.getElementById('container');
+        container.innerHTML = '';
+
+        // Mapeamento dinâmico (Tenta várias chaves comuns em APIs de futebol)
+        const homeName = m.home_team?.name || m.homeTeam?.name || m.localTeam?.name || "Time Casa";
+        const awayName = m.away_team?.name || m.awayTeam?.name || m.visitorTeam?.name || "Time Fora";
+        const homeScore = m.stats?.home_score ?? m.scores?.localteam_score ?? m.home_score ?? 0;
+        const awayScore = m.stats?.away_score ?? m.scores?.visitorteam_score ?? m.away_score ?? 0;
+        const status = m.status_name || m.status || m.time?.status || "Agendado";
+
+        const html = `
+            <div class="match-card">
+                <div class="team">${homeName}</div>
+                <div class="score-area">
+                    <span class="match-time">${status}</span>
+                    <span class="score">${homeScore} - ${awayScore}</span>
+                </div>
+                <div class="team">${awayName}</div>
+            </div>
+            <div style="text-align:center; color:gray; font-size:12px;">ID da Partida: ${m.id || 'N/A'}</div>
+        `;
+        container.innerHTML = html;
+    }
+
+    loadData();
 </script>
 
 </body>
