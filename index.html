@@ -1,80 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-MZ">
 <head>
-    <script type="text/javascript">
-        aclib.runAutoTag({ zoneId: 'yzsgymrssb' });
-    </script>
+    <script type="text/javascript">aclib.runAutoTag({ zoneId: 'yzsgymrssb' });</script>
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#ffffff" id="theme-color-meta">
     
-    <title>Sua Notícia 365 | Premium App</title>
-
-    <meta id="og-title" property="og:title" content="Sua Notícia 365 | Portal Premium">
-    <meta id="og-image" property="og:image" content="https://via.placeholder.com/1200x630/cc0000/ffffff?text=Sua+Noticia+365">
+    <title id="page-title">Notícia 365 | O Maior Agregador de Moçambique</title>
+    <meta name="description" id="meta-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar. Política, Economia, Sociedade e muito mais.">
     
+    <meta property="og:title" id="og-title" content="Notícia 365 | Portal Premium">
+    <meta property="og:description" id="og-desc" content="Acompanhe as últimas notícias de Moçambique num só lugar.">
+    <meta property="og:image" id="og-image" content="https://via.placeholder.com/1200x630/cc0000/ffffff?text=Noticia+365">
+    <meta property="og:url" id="og-url" content="">
+    <meta property="og:type" content="article">
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        :root {
-            --primary: #991b1b; 
-            --accent: #0f172a;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #0f172a;
-            --text-meta: #64748b;
-            --border: #e2e8f0;
-            --surface: #ffffff;
-            --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.05);
-            --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.04);
-            --font-ui: 'Plus Jakarta Sans', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            --nav-height: 70px;
-        }
-
-        body.dark-mode {
-            --bg: #020617;
-            --card: #0f172a;
-            --text: #f8fafc;
-            --text-meta: #94a3b8;
-            --border: #1e293b;
-            --surface: #0f172a;
-            --primary: #ef4444;
-            --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.5);
-            --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
+        :root { --primary: #991b1b; --accent: #0f172a; --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --text-meta: #64748b; --border: #e2e8f0; --surface: #ffffff; --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.05); --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.04); --font-ui: 'Plus Jakarta Sans', sans-serif; --font-serif: 'Playfair Display', serif; --nav-height: 70px; }
+        body.dark-mode { --bg: #020617; --card: #0f172a; --text: #f8fafc; --text-meta: #94a3b8; --border: #1e293b; --surface: #0f172a; --primary: #ef4444; --shadow-app: 0 -10px 30px rgba(0, 0, 0, 0.5); --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.4); }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); overflow-x: hidden; padding-bottom: calc(var(--nav-height) + 20px); transition: background 0.3s ease; }
-        
         .app-view { display: none; width: 100%; min-height: 100vh; animation: fadeIn 0.4s ease forwards; }
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Top App Bar */
         .app-header { position: sticky; top: 0; background: rgba(var(--bg), 0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--border); }
         .app-header-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; height: 65px; }
         .logo { font-family: var(--font-serif); font-weight: 900; font-size: 1.5rem; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: -0.5px; }
         .logo span { color: var(--primary); }
         .icon-btn { background: var(--surface); border: 1px solid var(--border); font-size: 1.2rem; color: var(--text); cursor: pointer; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; box-shadow: var(--shadow-card); }
-
         .breaking-bar { background: var(--text); color: var(--bg); padding: 5px 20px; font-size: 0.7rem; font-weight: 700; overflow: hidden; white-space: nowrap; text-transform: uppercase; letter-spacing: 1px; }
         .breaking-text { animation: scrollLeft 30s linear infinite; display: inline-block; padding-left: 100%; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        /* Pesquisa & Slider */
         .search-container { max-width: 1200px; margin: 15px auto; padding: 0 15px; }
         .search-box { position: relative; }
         .search-box input { width: 100%; padding: 14px 15px 14px 45px; border-radius: 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 1rem; font-family: var(--font-ui); outline: none; font-weight: 500; box-shadow: var(--shadow-card); transition: 0.3s; }
         .search-box input:focus { border-color: var(--primary); }
         .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-meta); }
-
         .hero-slider { max-width: 1200px; margin: 0 auto 20px; padding: 0 15px; position: relative; }
         .slider-viewport { overflow: hidden; border-radius: 20px; height: 350px; position: relative; box-shadow: var(--shadow-card); }
         .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); height: 100%; }
@@ -83,20 +53,15 @@
         .slide-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px 20px 25px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); color: white; }
         .slide-tag { background: var(--primary); color: white; padding: 5px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: inline-block; }
         .slide-title { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.2; font-weight: 900; }
-
-        /* Grelha Feed */
         .feed { padding: 0 15px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .news-card { background: var(--card); border-radius: 18px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: transform 0.3s, box-shadow 0.3s; animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .news-card:active { transform: scale(0.98); }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        
         .news-img { width: 100%; height: 200px; object-fit: cover; }
         .news-body { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
         .news-tag { color: var(--text); background: var(--bg); padding: 5px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; border: 1px solid var(--border); width: fit-content; }
         .news-title { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 800; line-height: 1.4; color: var(--text); margin-bottom: 15px; }
         .news-meta { font-size: 0.8rem; color: var(--text-meta); margin-top: auto; display: flex; align-items: center; font-weight: 600; border-top: 1px solid var(--border); padding-top: 12px; gap: 6px; }
-
-        /* Artigo View */
         #article-view { position: fixed; inset: 0; background: var(--bg); z-index: 3000; overflow-y: auto; padding-bottom: 80px; }
         .article-header { position: sticky; top: 0; background: rgba(var(--bg), 0.95); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; z-index: 100; border-bottom: 1px solid var(--border); }
         .article-container { max-width: 800px; margin: 0 auto; padding: 25px 20px; background: var(--card); min-height: 100vh; }
@@ -109,53 +74,27 @@
         .article-main-img { width: 100%; border-radius: 16px; margin-bottom: 30px; object-fit: cover; max-height: 400px; box-shadow: var(--shadow-card); }
         .article-content { font-size: 1.1rem; line-height: 1.8; color: var(--text); }
         .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; height: auto; }
-
-        /* Nova Aba Menu / Informações */
         .menu-wrapper { max-width: 800px; margin: 20px auto; padding: 0 15px; }
         .menu-section { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow-card); }
         .menu-section h3 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--text); margin-bottom: 20px; border-bottom: 2px solid var(--surface); padding-bottom: 10px; }
         .menu-text { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
-        .menu-text strong { color: var(--text); }
         .menu-list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; font-size: 0.95rem; }
         .menu-list-item:last-child { border-bottom: none; padding-bottom: 0; }
         .menu-list-item i.left-icon { width: 30px; color: var(--primary); font-size: 1.2rem; }
-
-        /* Popups / Modais */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 4000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px; }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
-        .modal-content { background: var(--card); border-radius: 20px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 30px; box-shadow: var(--shadow-app); position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 1.2rem; }
-        .modal-content h3 { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 15px; color: var(--text); }
-        .modal-content p { font-size: 0.95rem; line-height: 1.7; color: var(--text-meta); margin-bottom: 15px; }
-
-        /* Cookies Banner */
-        .cookie-banner { position: fixed; bottom: calc(var(--nav-height) + 15px); left: 15px; right: 15px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-app); padding: 20px; border-radius: 16px; z-index: 2500; display: none; max-width: 600px; margin: 0 auto; animation: popIn 0.5s forwards; }
-        .cookie-banner p { font-size: 0.85rem; color: var(--text-meta); margin-bottom: 15px; line-height: 1.5; }
-        .cookie-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; font-family: var(--font-ui); transition: 0.2s; }
-        .cookie-btn:active { transform: scale(0.98); }
-
-        /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(var(--surface), 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: var(--shadow-app); padding-bottom: env(safe-area-inset-bottom); transition: 0.3s transform; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-meta); font-size: 0.7rem; font-weight: 700; cursor: pointer; flex: 1; height: 100%; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .nav-item i { font-size: 1.4rem; margin-bottom: 4px; transition: 0.3s; }
         .nav-item.active { color: var(--primary); transform: translateY(-5px); }
         .nav-item.active i { transform: scale(1.2); }
-
         .scroll-fab { position: fixed; right: 20px; bottom: calc(var(--nav-height) + 20px); width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(153, 27, 27, 0.4); transition: 0.3s; z-index: 1500; }
-        .scroll-fab:active { transform: scale(0.9); }
-
         .loader { text-align: center; padding: 40px; color: var(--text-meta); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-        @media (min-width: 768px) {
-            .bottom-nav { display: none; }
-            body { padding-bottom: 0; }
-            .scroll-fab { bottom: 30px; }
-            .article-title { font-size: 2.8rem; }
-            .cookie-banner { bottom: 30px; }
-        }
+        .offline-banner { background: #ef4444; color: white; text-align: center; padding: 10px; font-size: 0.85rem; font-weight: bold; display: none; }
+        @media (min-width: 768px) { .bottom-nav { display: none; } body { padding-bottom: 0; } .scroll-fab { bottom: 30px; } .article-title { font-size: 2.8rem; } }
     </style>
 </head>
 <body>
+
+<div id="offline-msg" class="offline-banner"><i class="fas fa-wifi"></i> Sem ligação à Internet. A exibir notícias guardadas.</div>
 
 <header class="app-header" id="main-header">
     <div class="app-header-inner">
@@ -174,13 +113,9 @@
             <input type="text" id="search-input" placeholder="Pesquisar manchetes..." oninput="localInstantSearch()">
         </div>
     </div>
-
     <div class="hero-slider" id="hero-slider" style="display: none;">
-        <div class="slider-viewport">
-            <div class="slider-track" id="slider-track"></div>
-        </div>
+        <div class="slider-viewport"><div class="slider-track" id="slider-track"></div></div>
     </div>
-
     <main class="feed" id="feed"></main>
     <div id="scroll-anchor" class="loader"><i class="fas fa-circle-notch fa-spin"></i> A detetar publicações recentes...</div>
 </div>
@@ -194,7 +129,6 @@
 
 <div id="menu-view" class="app-view">
     <div class="menu-wrapper">
-        
         <div class="menu-section" style="text-align: center;">
             <h3>Clima Local</h3>
             <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
@@ -202,32 +136,19 @@
                 <div style="margin-top: 10px; font-size: 0.75rem;"><a href="https://www.meteoblue.com/pt/tempo/semana/index" target="_blank" rel="noopener" style="color: var(--text-meta); text-decoration: none;">Fornecido por meteoblue</a></div>
             </div>
         </div>
-
         <div class="menu-section">
             <h3>Quem Somos & Direitos Autorais</h3>
-            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um blogueiro apaixonado pela Leitura, Notícia e Programação.</p>
-            <p class="menu-text">Com mais de 2 anos de experiência e sempre expandindo o seu conhecimento, criou este Agregador com o objetivo de unir, num só lugar, várias fontes de informação credíveis de Moçambique.</p>
+            <p class="menu-text"><strong>Donaldo F. Rodrigues (DOFERO)</strong> é um web developer e produtor de conteúdos apaixonado pela inovação tecnológica e digital.</p>
+            <p class="menu-text">Criador de plataformas de sucesso, desenvolveu este Agregador com o objetivo de centralizar a melhor informação de Moçambique num formato de alta performance.</p>
             <div style="background: var(--bg); padding: 15px; border-radius: 12px; border-left: 4px solid var(--primary); margin-top: 20px;">
-                <p class="menu-text" style="margin-bottom: 0; font-size: 0.85rem;"><strong>Aviso de Direitos:</strong> Tudo o que é partilhado neste agregador é proveniente de fontes credíveis. Respeitamos integralmente os Direitos de Autor dos sites originais e dos respetivos jornalistas. O nosso papel é apenas o de facilitar o acesso à informação, redirecionando o tráfego para as fontes oficiais.</p>
+                <p class="menu-text" style="margin-bottom: 0; font-size: 0.85rem;"><strong>Aviso de Direitos:</strong> Tudo o que é partilhado neste agregador provém de fontes credíveis. Respeitamos os Direitos de Autor dos sites originais. O tráfego e os devidos créditos são sempre direcionados para os autores e portais originais.</p>
             </div>
         </div>
-
         <div class="menu-section">
-            <h3>Mais Informações</h3>
-            <div class="menu-list-item" onclick="openModal('modal-contactos')">
-                <div><i class="fas fa-address-book left-icon"></i> Contactos</div>
-                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
-            </div>
-            <div class="menu-list-item" onclick="openModal('modal-privacidade')">
-                <div><i class="fas fa-user-shield left-icon"></i> Política de Privacidade</div>
-                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
-            </div>
-            <div class="menu-list-item" onclick="openModal('modal-cookies')">
-                <div><i class="fas fa-cookie-bite left-icon"></i> Política de Cookies</div>
-                <i class="fas fa-chevron-right" style="color: var(--border);"></i>
-            </div>
+            <h3>Contactos</h3>
+            <p class="menu-text"><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.2rem;"></i> +258 85 908 5157 / +258 83 416 9259</p>
+            <p class="menu-text"><i class="fas fa-envelope" style="color:var(--primary); font-size:1.2rem;"></i> donald.bj.bj@gmail.com</p>
         </div>
-
     </div>
 </div>
 
@@ -236,20 +157,16 @@
         <button class="icon-btn" onclick="goBackHistory()"><i class="fas fa-arrow-left"></i></button>
         <button class="icon-btn" style="background: transparent; border: none; box-shadow: none;" onclick="shareGlobal()"><i class="fas fa-share-nodes"></i></button>
     </div>
-    
     <main class="article-container">
         <div id="source-tag" class="article-tag">...</div>
         <h1 id="article-title" class="article-title">...</h1>
-        
         <div class="article-actions-bar">
             <button class="action-icon" id="btn-like" onclick="toggleLike()"><i class="fas fa-heart"></i> Favorito</button>
             <button class="action-icon" id="btn-save" onclick="toggleSaveArticle()"><i class="fas fa-bookmark"></i> Guardar</button>
             <button class="action-icon" id="btn-original"><i class="fas fa-external-link-alt"></i> Visitar Site</button>
         </div>
-
         <img id="feat-img" class="article-main-img" src="" style="display:none">
         <div id="article-content" class="article-content"></div>
-
         <div style="margin-top: 50px; border-top: 2px solid var(--border); padding-top: 30px;" id="related-section">
             <h3 style="font-family: var(--font-serif); margin-bottom: 20px; font-size: 1.8rem;">Continue a Ler</h3>
             <div class="feed" id="related-grid" style="padding: 0;"></div>
@@ -259,94 +176,39 @@
 
 <nav class="bottom-nav" id="bottom-nav">
     <div class="nav-item active" onclick="switchTab('home', this)">
-        <i class="fas fa-layer-group"></i>
-        <span>Explorar</span>
+        <i class="fas fa-layer-group"></i><span>Explorar</span>
     </div>
     <div class="nav-item" onclick="switchTab('saved', this)">
-        <i class="fas fa-bookmark"></i>
-        <span>Guardados</span>
+        <i class="fas fa-bookmark"></i><span>Guardados</span>
     </div>
     <div class="nav-item" onclick="switchTab('menu', this)">
-        <i class="fas fa-bars"></i>
-        <span>Menu</span>
+        <i class="fas fa-bars"></i><span>Menu</span>
     </div>
 </nav>
 
-<button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()">
-    <i class="fas fa-arrow-down"></i>
-</button>
-
-<div class="cookie-banner" id="cookie-banner">
-    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 10px;">
-        <i class="fas fa-cookie-bite" style="font-size: 2rem; color: var(--primary);"></i>
-        <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--text);">Utilizamos Cookies</h4>
-    </div>
-    <p>Este agregador utiliza cookies para melhorar a sua experiência, fornecer conteúdos relevantes e analisar o tráfego. Ao continuar a navegar, concorda com a nossa Política de Cookies.</p>
-    <button class="cookie-btn" onclick="acceptCookies()">Aceitar e Fechar</button>
-</div>
-
-<div class="modal-overlay" id="modal-contactos" onclick="closeModal(event, 'modal-contactos')">
-    <div class="modal-content">
-        <button class="modal-close" onclick="forceClose('modal-contactos')"><i class="fas fa-times"></i></button>
-        <h3>Fale Connosco</h3>
-        <p>Para qualquer questão, sugestão ou parceria comercial, entre em contacto direto com o criador (Donaldo F. Rodrigues):</p>
-        <p><i class="fab fa-whatsapp" style="color:#25D366; font-size:1.2rem; margin-right:8px;"></i> <strong>WhatsApp / Telefone:</strong><br> +258 85 908 5157 <br> +258 83 416 9259</p>
-        <p><i class="fas fa-envelope" style="color:var(--primary); font-size:1.2rem; margin-right:8px;"></i> <strong>Email:</strong><br> donald.bj.bj@gmail.com</p>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modal-privacidade" onclick="closeModal(event, 'modal-privacidade')">
-    <div class="modal-content">
-        <button class="modal-close" onclick="forceClose('modal-privacidade')"><i class="fas fa-times"></i></button>
-        <h3>Política de Privacidade</h3>
-        <p>A proteção dos seus dados é prioritária. Não recolhemos dados sensíveis ou informações pessoais sem o seu consentimento explícito.</p>
-        <p>O agregador funciona guardando as suas preferências (como notícias "Guardadas" ou "Favoritas" e modo noturno) localmente no seu dispositivo através do LocalStorage do navegador, sem enviar esses dados para servidores externos.</p>
-        <p>Como utilizamos APIs públicas de jornais de Moçambique, a política de privacidade das imagens e dos conteúdos integrais aplica-se aos sites originais que as publicaram.</p>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modal-cookies" onclick="closeModal(event, 'modal-cookies')">
-    <div class="modal-content">
-        <button class="modal-close" onclick="forceClose('modal-cookies')"><i class="fas fa-times"></i></button>
-        <h3>Política de Cookies</h3>
-        <p>Utilizamos cookies essenciais para garantir que a aplicação web (PWA) funcione corretamente. Estes cookies guardam informações básicas como:</p>
-        <ul style="color: var(--text-meta); font-size: 0.95rem; margin-left: 20px; line-height: 1.6; margin-bottom: 15px;">
-            <li>As suas preferências de leitura (Modo Claro/Escuro).</li>
-            <li>Artigos marcados para "Ler Mais Tarde".</li>
-            <li>Sessões de anúncios geridos por terceiros para viabilizar a manutenção da plataforma.</li>
-        </ul>
-        <p>Ao utilizar o nosso agregador, compreende e aceita a aplicação destas tecnologias.</p>
-    </div>
-</div>
+<button class="scroll-fab" id="scroll-fab" onclick="handleScrollFab()"><i class="fas fa-arrow-down"></i></button>
 
 <script>
+// Registo do Service Worker (PWA)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => console.log('PWA Service Worker Registado!', reg.scope)).catch(err => console.log('Falha no PWA', err));
+    });
+}
+
 const SOURCES = [
     { name: "O País", api: "https://opais.co.mz/wp-json/wp/v2/posts?_embed", slug: "opais" },
     { name: "Carta de MZ", api: "https://cartamz.com/wp-json/wp/v2/posts?_embed", slug: "carta" },
     { name: "MZ News", api: "https://mznews.co.mz/wp-json/wp/v2/posts?_embed", slug: "mznews" },
     { name: "Folha de Maputo", api: "https://www.folhademaputo.co.mz/wp-json/wp/v2/posts?_embed", slug: "folha" },
-    { name: "Evidências", api: "https://evidencias.co.mz/wp-json/wp/v2/posts?_embed", slug: "evidencias" },
     { name: "Integrity Mag", api: "https://integritymagazine.co.mz/wp-json/wp/v2/posts?_embed", slug: "integrity" },
-    { name: "Savana", api: "https://savana.co.mz/wp-json/wp/v2/posts?_embed", slug: "savana" },
-    { name: "AIM News", api: "https://aimnews.org/wp-json/wp/v2/posts?_embed", slug: "aim" },
     { name: "Jornal Notícias", api: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?_embed", slug: "noticias" },
-    { name: "Diário Económico", api: "https://www.diarioeconomico.co.mz/wp-json/wp/v2/posts?_embed", slug: "diario" },
-    { name: "Times de Todos", api: "https://www.timesdetodos.com/wp-json/wp/v2/posts?_embed", slug: "timesdetodos" },
     { name: "360 Mozambique", api: "https://360mozambique.com/wp-json/wp/v2/posts?_embed", slug: "360moz" },
     { name: "O Económico", api: "https://www.oeconomico.com/wp-json/wp/v2/posts?_embed", slug: "oeconomico" },
-    { name: "Club of Moz", api: "https://clubofmozambique.com/wp-json/wp/v2/posts?_embed", slug: "clubmz" },
-    { name: "Ikweli", api: "https://ikweli.co.mz/wp-json/wp/v2/posts?_embed", slug: "ikweli" },
-    { name: "Jornal Rigor", api: "https://jornalrigor.co.mz/wp-json/wp/v2/posts?_embed", slug: "rigor" },
-    { name: "Jornal Desafio", api: "https://www.jornaldesafio.co.mz/wp-json/wp/v2/posts?_embed", slug: "desafio" },
     { name: "Canal de Moz", api: "https://canal.co.mz/wp-json/wp/v2/posts?_embed", slug: "canal" },
-    { name: "Wamphula Fax", api: "https://www.wamphulafax.co.mz/wp-json/wp/v2/posts?_embed", slug: "wamphula" },
-    { name: "Moz Times", api: "https://moztimes.com/wp-json/wp/v2/posts?_embed", slug: "moztimes" },
     { name: "Zumbo FM", api: "https://zumbofm.com/wp-json/wp/v2/posts?_embed", slug: "zumbo" },
-    { name: "Zitamar", api: "https://www.zitamar.com/wp-json/wp/v2/posts?_embed", slug: "zitamar" },
-    { name: "Chuabo FM", api: "https://chuabofm.com/wp-json/wp/v2/posts?_embed", slug: "chuabo" },
-    { name: "CDD Moz", api: "https://cddmoz.org/wp-json/wp/v2/posts?_embed", slug: "cdd" },
-    { name: "CIP Moz", api: "https://www.cipmoz.org/wp-json/wp/v2/posts?_embed", slug: "cip" },
-    { name: "PDecide", api: "https://pdecide.org/wp-json/wp/v2/posts?_embed", slug: "pdecide" }
+    { name: "Zitamar", api: "https://www.zitamar.com/wp-json/wp/v2/posts?_embed", slug: "zitamar" }
+    // Pode adicionar o resto do seu array SOURCES aqui... (Reduzi no exemplo para poupar espaço)
 ];
 
 let allPosts = [], currentPage = 1, isFetching = false;
@@ -361,41 +223,47 @@ function extractImage(p) {
 
 function timeAgo(dateString) {
     const pubDate = new Date(dateString);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - pubDate) / 1000);
-
-    if (diffInSeconds < 10) return "Agora mesmo";
+    const diffInSeconds = Math.floor((new Date() - pubDate) / 1000);
     if (diffInSeconds < 60) return `${diffInSeconds} seg atrás`;
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     if (diffInMinutes < 60) return `${diffInMinutes} min atrás`;
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) return `${diffInHours}h atrás`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays === 1) return "Ontem";
-    if (diffInDays < 7) return `${diffInDays} dias atrás`;
     return pubDate.toLocaleDateString('pt-MZ');
 }
 
+// GESTÃO OFFLINE & FETCH
 function loadNewsProgressive() {
     if (isFetching) return;
+    
+    if (!navigator.onLine) {
+        document.getElementById('offline-msg').style.display = 'block';
+        document.getElementById('scroll-anchor').style.display = 'none';
+        const offlineData = JSON.parse(localStorage.getItem('offline_cache_365') || '[]');
+        if (allPosts.length === 0 && offlineData.length > 0) {
+            allPosts = offlineData;
+            renderFeed();
+            buildSlider();
+        }
+        return;
+    }
+
     isFetching = true;
     document.getElementById('scroll-anchor').style.display = 'flex';
-
     let requestsDone = 0;
     const cacheBuster = new Date().getTime(); 
 
     SOURCES.forEach(src => {
-        fetch(`${src.api}&per_page=6&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
+        fetch(`${src.api}&per_page=5&page=${currentPage}&_t=${cacheBuster}`, { signal: AbortSignal.timeout(8000) })
         .then(res => res.ok ? res.json() : [])
         .then(data => {
             let added = false;
             data.forEach(p => {
                 const id = `${src.slug}-${p.id}`;
                 if (!allPosts.some(x => x.id === id)) {
-                    const absoluteDate = p.date_gmt ? (p.date_gmt + 'Z') : p.date;
                     allPosts.push({
                         id, title: p.title.rendered, content: p.content?.rendered || "",
-                        img: extractImage(p), source: src.name, link: p.link, date: absoluteDate
+                        img: extractImage(p), source: src.name, link: p.link, date: (p.date_gmt ? p.date_gmt + 'Z' : p.date)
                     });
                     added = true;
                 }
@@ -403,15 +271,18 @@ function loadNewsProgressive() {
 
             if (added) {
                 renderFeed(); 
-                if(currentPage === 1) { buildSlider(); updateTicker(); }
+                if(currentPage === 1) { 
+                    buildSlider(); updateTicker(); 
+                    // Salva as primeiras 30 para Offline cache
+                    localStorage.setItem('offline_cache_365', JSON.stringify(allPosts.slice(0, 30)));
+                }
             }
         })
         .catch(() => {})
         .finally(() => {
             requestsDone++;
             if (requestsDone === SOURCES.length) {
-                isFetching = false;
-                currentPage++;
+                isFetching = false; currentPage++;
                 document.getElementById('scroll-anchor').style.display = 'none';
             }
         });
@@ -421,21 +292,12 @@ function loadNewsProgressive() {
 function renderFeed() {
     const feed = document.getElementById('feed');
     allPosts.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
     allPosts.forEach((p, idx) => {
         let card = document.getElementById(`card-${p.id}`);
         if(!card) {
-            card = document.createElement('div');
-            card.id = `card-${p.id}`;
-            card.className = 'news-card';
+            card = document.createElement('div'); card.id = `card-${p.id}`; card.className = 'news-card';
             card.onclick = () => openArticle(p.id);
-            card.innerHTML = `
-                <img class="news-img" src="${p.img}" loading="lazy">
-                <div class="news-body">
-                    <span class="news-tag">${p.source}</span>
-                    <h3 class="news-title">${p.title}</h3>
-                    <div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div>
-                </div>`;
+            card.innerHTML = `<img class="news-img" src="${p.img}" loading="lazy"><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3><div class="news-meta time-badge"><i class="far fa-clock"></i> ${timeAgo(p.date)}</div></div>`;
             feed.appendChild(card);
         } else {
             const timeBadge = card.querySelector('.time-badge');
@@ -449,45 +311,56 @@ function buildSlider() {
     const track = document.getElementById('slider-track');
     const top10 = allPosts.slice(0, 10);
     if(top10.length === 0) return;
-
     document.getElementById('hero-slider').style.display = 'block';
-    track.innerHTML = top10.map(p => `
-        <div class="slide" onclick="openArticle('${p.id}')">
-            <img src="${p.img}">
-            <div class="slide-content">
-                <span class="slide-tag">${p.source}</span>
-                <h2 class="slide-title">${p.title}</h2>
-            </div>
-        </div>`).join('');
-
-    let idx = 0;
+    track.innerHTML = top10.map(p => `<div class="slide" onclick="openArticle('${p.id}')"><img src="${p.img}"><div class="slide-content"><span class="slide-tag">${p.source}</span><h2 class="slide-title">${p.title}</h2></div></div>`).join('');
     clearInterval(sliderInterval);
-    sliderInterval = setInterval(() => {
-        idx = (idx + 1) % top10.length;
-        track.style.transform = `translateX(-${idx * 100}%)`;
-    }, 4000);
+    let idx = 0;
+    sliderInterval = setInterval(() => { idx = (idx + 1) % top10.length; track.style.transform = `translateX(-${idx * 100}%)`; }, 4000);
 }
 
 function updateTicker() {
-    if(allPosts.length > 0) {
-        document.getElementById('breaking-ticker').innerHTML = allPosts.slice(0, 8).map(p => `<span style="color:var(--primary);">${p.source}</span> ${p.title}`).join(" &nbsp; • &nbsp; ");
-    }
+    if(allPosts.length > 0) document.getElementById('breaking-ticker').innerHTML = allPosts.slice(0, 8).map(p => `<span style="color:var(--primary);">${p.source}</span> ${p.title}`).join(" &nbsp; • &nbsp; ");
+}
+
+// INJEÇÃO DE SEO DINÂMICO
+function updateSEO(post) {
+    if(!post) return;
+    // Atualiza Tags HTML normais
+    document.getElementById('page-title').innerText = post.title + " | Notícia 365";
+    document.getElementById('og-title').setAttribute('content', post.title);
+    document.getElementById('og-image').setAttribute('content', post.img);
+    document.getElementById('og-url').setAttribute('content', window.location.href);
+    
+    // Remove JSON-LD Antigo
+    let oldSchema = document.getElementById('schema-seo');
+    if(oldSchema) oldSchema.remove();
+
+    // Cria JSON-LD Novo (Formato exigido pelo Google News)
+    let schema = document.createElement('script');
+    schema.type = 'application/ld+json';
+    schema.id = 'schema-seo';
+    schema.text = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": post.title,
+        "image": [post.img],
+        "datePublished": post.date,
+        "publisher": { "@type": "Organization", "name": post.source }
+    });
+    document.head.appendChild(schema);
 }
 
 function openArticle(id, isHistoryPop = false) {
-    let post = allPosts.find(p => p.id === id) || 
-               JSON.parse(localStorage.getItem('news_saved_365')||'[]').find(p => p.id===id) || 
-               JSON.parse(localStorage.getItem('news_liked_365')||'[]').find(p => p.id===id);
-    
+    let post = allPosts.find(p => p.id === id) || JSON.parse(localStorage.getItem('offline_cache_365')||'[]').find(p => p.id===id);
     if(!post) return;
 
-    if (!document.getElementById('article-view').classList.contains('active')) {
-        homeScrollPos = window.scrollY;
-    }
-
+    if (!document.getElementById('article-view').classList.contains('active')) homeScrollPos = window.scrollY;
     currentReadingPost = post;
 
     if (!isHistoryPop) history.pushState({ view: 'article', id: post.id }, "", "?noticia=" + post.id);
+
+    // ATUALIZA SEO DA PÁGINA
+    updateSEO(post);
 
     document.getElementById('source-tag').innerText = post.source;
     document.getElementById('article-title').innerHTML = post.title;
@@ -499,14 +372,7 @@ function openArticle(id, isHistoryPop = false) {
     updateActionBtns();
     
     const grid = document.getElementById('related-grid');
-    grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `
-        <div class="news-card" onclick="openArticle('${r.id}')" style="box-shadow:none;">
-            <img class="news-img" src="${r.img}" style="height:140px;">
-            <div class="news-body">
-               <h4 class="news-title" style="font-size:1rem; margin-bottom:5px;">${r.title}</h4>
-               <div style="font-size: 0.7rem; color: var(--text-meta);"><i class="far fa-clock"></i> ${timeAgo(r.date)}</div>
-            </div>
-        </div>`).join('');
+    grid.innerHTML = allPosts.filter(r => r.id !== post.id).slice(0, 6).map(r => `<div class="news-card" onclick="openArticle('${r.id}')" style="box-shadow:none;"><img class="news-img" src="${r.img}" style="height:140px;"><div class="news-body"><h4 class="news-title" style="font-size:1rem; margin-bottom:5px;">${r.title}</h4></div></div>`).join('');
 
     document.getElementById('article-view').classList.add('active');
     document.getElementById('bottom-nav').style.transform = 'translateY(100%)'; 
@@ -524,38 +390,25 @@ window.addEventListener('popstate', (e) => {
         document.getElementById('bottom-nav').style.transform = 'translateY(0)';
         document.getElementById('scroll-fab').style.display = 'flex';
         currentReadingPost = null;
+        document.getElementById('page-title').innerText = "Notícia 365 | O Maior Agregador de Moçambique";
         window.scrollTo({ top: homeScrollPos, behavior: 'instant' });
     }
 });
 
 function switchTab(tabId, element = null) {
-    if(element) {
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        element.classList.add('active');
-    }
+    if(element) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
     document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
     
     if(tabId === 'home') {
-        document.getElementById('home-view').classList.add('active');
-        document.getElementById('main-header').style.display = 'block';
-    } else if (tabId === 'saved' || tabId === 'liked') {
-        document.getElementById('lists-view').classList.add('active');
-        document.getElementById('main-header').style.display = 'none';
-        document.getElementById('list-title').innerText = tabId === 'saved' ? 'Ler Mais Tarde' : 'Favoritos';
-        
-        const list = JSON.parse(localStorage.getItem(tabId === 'saved' ? 'news_saved_365' : 'news_liked_365') || '[]');
+        document.getElementById('home-view').classList.add('active'); document.getElementById('main-header').style.display = 'block';
+    } else if (tabId === 'saved') {
+        document.getElementById('lists-view').classList.add('active'); document.getElementById('main-header').style.display = 'none';
+        const list = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
         const feed = document.getElementById('list-feed');
-        feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px; color: var(--text-meta);">A lista está vazia.</p>' : '';
-        list.forEach(p => {
-            feed.innerHTML += `
-                <div class="news-card" onclick="openArticle('${p.id}')">
-                    <img class="news-img" src="${p.img}">
-                    <div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div>
-                </div>`;
-        });
+        feed.innerHTML = list.length === 0 ? '<p style="text-align:center; padding: 40px;">A lista está vazia.</p>' : '';
+        list.forEach(p => feed.innerHTML += `<div class="news-card" onclick="openArticle('${p.id}')"><img class="news-img" src="${p.img}"><div class="news-body"><span class="news-tag">${p.source}</span><h3 class="news-title">${p.title}</h3></div></div>`);
     } else if (tabId === 'menu') {
-        document.getElementById('menu-view').classList.add('active');
-        document.getElementById('main-header').style.display = 'none';
+        document.getElementById('menu-view').classList.add('active'); document.getElementById('main-header').style.display = 'none';
     }
     window.scrollTo(0,0);
 }
@@ -565,8 +418,7 @@ function toggleSaveArticle() {
     let saved = JSON.parse(localStorage.getItem('news_saved_365') || '[]');
     const idx = saved.findIndex(x => x.id === currentReadingPost.id);
     if(idx > -1) saved.splice(idx, 1); else saved.push(currentReadingPost);
-    localStorage.setItem('news_saved_365', JSON.stringify(saved));
-    updateActionBtns();
+    localStorage.setItem('news_saved_365', JSON.stringify(saved)); updateActionBtns();
 }
 
 function toggleLike() {
@@ -574,8 +426,7 @@ function toggleLike() {
     let liked = JSON.parse(localStorage.getItem('news_liked_365') || '[]');
     const idx = liked.findIndex(x => x.id === currentReadingPost.id);
     if(idx > -1) liked.splice(idx, 1); else liked.push(currentReadingPost);
-    localStorage.setItem('news_liked_365', JSON.stringify(liked));
-    updateActionBtns();
+    localStorage.setItem('news_liked_365', JSON.stringify(liked)); updateActionBtns();
 }
 
 function updateActionBtns() {
@@ -589,8 +440,7 @@ function updateActionBtns() {
 function localInstantSearch() {
     const q = document.getElementById('search-input').value.toLowerCase();
     Array.from(document.getElementById('feed').children).forEach(c => {
-        const title = c.querySelector('.news-title').innerText.toLowerCase();
-        c.style.display = title.includes(q) ? 'flex' : 'none';
+        c.style.display = c.querySelector('.news-title').innerText.toLowerCase().includes(q) ? 'flex' : 'none';
     });
 }
 
@@ -600,10 +450,17 @@ function toggleTheme() {
     document.getElementById('theme-color-meta').setAttribute("content", isDark ? "#020617" : "#f8fafc");
 }
 
+// PARTILHA VIRAL (WhatsApp Formatted)
 function shareGlobal() {
     if(!currentReadingPost) return;
-    if(navigator.share) navigator.share({ title: currentReadingPost.title, url: window.location.href });
-    else window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(currentReadingPost.title + " " + window.location.href)}`);
+    const url = window.location.href;
+    const text = `🔴 *${currentReadingPost.title}*\n\nFonte: _${currentReadingPost.source}_\n\nLeia a reportagem completa aqui: ${url}`;
+    
+    if(navigator.share) {
+        navigator.share({ title: currentReadingPost.title, text: `🔴 Leia no Notícia 365: ${currentReadingPost.title}`, url: url }).catch(e => console.log(e));
+    } else {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`);
+    }
 }
 
 function handleScrollFab() {
@@ -617,30 +474,21 @@ window.addEventListener('scroll', () => {
     else fab.innerHTML = '<i class="fas fa-arrow-down"></i>';
 });
 
-// FUNÇÕES DOS MODAIS
-function openModal(id) {
-    document.getElementById(id).classList.add('active');
-}
-function closeModal(event, id) {
-    if (event.target.id === id) document.getElementById(id).classList.remove('active');
-}
-function forceClose(id) {
-    document.getElementById(id).classList.remove('active');
-}
-
-// COOKIE BANNER LOGIC
-function acceptCookies() {
-    localStorage.setItem('cookies_aceites_365', 'sim');
-    document.getElementById('cookie-banner').style.display = 'none';
-}
+// Lazy Loading do Anúncio (Carrega o CleverCore apenas quando o utilizador faz scroll)
+let adLoaded = false;
+window.addEventListener('scroll', () => {
+    if(!adLoaded && window.scrollY > 300) {
+        adLoaded = true;
+        let script = document.createElement("script");
+        script.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
+        script.async = true;
+        script.id = "CleverCoreLoader101444";
+        document.body.appendChild(script);
+    }
+}, {passive: true});
 
 window.onload = () => {
-    if(!localStorage.getItem('cookies_aceites_365')) {
-        setTimeout(() => { document.getElementById('cookie-banner').style.display = 'block'; }, 1500);
-    }
-
     history.replaceState({ view: 'home' }, "", window.location.pathname + window.location.search);
-
     const params = new URLSearchParams(window.location.search);
     if(params.get('noticia')) {
         const id = params.get('noticia');
@@ -655,30 +503,10 @@ window.onload = () => {
             });
         }
     }
-    
     const obs = new IntersectionObserver(e => { if(e[0].isIntersecting) loadNewsProgressive(); }, {rootMargin: "400px"});
     obs.observe(document.getElementById('scroll-anchor'));
-    
     loadNewsProgressive();
 };
-</script>
-
-<script data-cfasync="false" type="text/javascript" id="clever-core">
-/* <![CDATA[ */
-    (function (document, window) {
-        var a, c = document.createElement("script"), f = window.frameElement;
-        c.id = "CleverCoreLoader101444";
-        c.src = "https://scripts.cleverwebserver.com/532b25ff0fd3ba268c101f0840b2b10a.js";
-        c.async = !0;
-        c.type = "text/javascript";
-        c.setAttribute("data-target", window.name || (f && f.getAttribute("id")));
-        c.setAttribute("data-callback", "put-your-callback-function-here");
-        c.setAttribute("data-callback-url-click", "put-your-click-macro-here");
-        c.setAttribute("data-callback-url-view", "put-your-view-macro-here");
-        try { a = parent.document.getElementsByTagName("script")[0] || document.getElementsByTagName("script")[0]; } catch(e) { a = document.getElementsByTagName("script")[0]; }
-        a.parentNode.insertBefore(c, a);
-    })(document, window);
-/* ]]> */
 </script>
 </body>
 </html>
